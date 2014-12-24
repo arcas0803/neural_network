@@ -1,0 +1,23 @@
+// Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
+// is governed by a BSD-style license that can be found in the LICENSE file.
+
+library RadialBase;
+
+import '../arquitecture/network.dart';
+import '../arquitecture/network.dart';
+import '../arquitecture/layer.dart';
+import '../arquitecture/neuron.dart';
+import '../functions/input/radial_function.dart';
+import '../functions/activation/gaussian_function.dart';
+import '../functions/error/mean_square_error.dart';
+import '../functions/stop/max_iterations_function.dart';
+
+class RadialBase extends Network{
+  RadialBase(int numInputNeurons, int numHiddenNeurons, int maxIterations):super(){
+    this.createNetwork(numInputNeurons, numHiddenNeurons, maxIterations);
+  }
+
+  void createNetwork(int numInputNeurons, int numHiddenNeurons, int maxIterations){
+
+  }
+}
