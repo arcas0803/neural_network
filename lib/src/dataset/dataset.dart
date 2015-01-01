@@ -1,13 +1,15 @@
 // Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
-library DataSet;
+
+library DataSet.DataSet;
 
 import 'dart:math';
 import 'package:collection/equality.dart';
+import "package:json_object/json_object.dart";
 import 'instance.dart';
 
 ///
-/// Set of instances used to train and test the artificial neural networks.
+/// Set of instances used to train and test an artificial neural network.
 ///
 
 class DataSet {
@@ -32,12 +34,7 @@ class DataSet {
   /// If the dataSet contains class values, the number of class values must be grater than 0.
   ///
 
-  DataSet(String title, int numValues, {int numClassValues}){
-    if(title == null){
-      this.title = "dataset";
-    }else{
-      this.title = title;
-    }
+  DataSet(this.title, int numValues, {int numClassValues}){
 
     if(numValues == null)
       throw ("Number of values can not be null!");
@@ -51,6 +48,7 @@ class DataSet {
       this._numClassValues = numClassValues;
       this._isSupervised = true;
     }else{
+      this._numClassValues = 0;
       this._isSupervised = false;
     }
 
@@ -59,48 +57,114 @@ class DataSet {
 
   }
 
-  List<String> get labels => this._labels;
+  //
+  // Create a dataSet from an JsonObject.
+  //
+  // JSON format:
+  // {
+  //  "title" : "Example",
+  //  "isSupervised" : true,
+  //  "numValues" : 2,
+  //  "numClassValues" : 2,
+  //  "instance" : [ {"elements":[2.1, 2.1, 2.1, 2.1], "isForTrain" : true } , {"elements":[2.1, 2.1, 2.1, 2.1], "isForTrain" : true } ]
+  //  }
+  //
 
-  ///
-  /// The number of labels should be equal to the number of attributes in the case of a DataSet unsupervised and
-  /// as the number of attributes and class values ​​in case of a dataset supervised.
-  ///
+  DataSet.fromJSON(JsonObject json){
 
-  void set labels(List <String> labels){
-    if(_isSupervised){
-      if(labels.length != (this._numValues + this._numClassValues))
-        throw ("You set a list of "+labels.length.toString()+" labels but the dataSet has "+this._labels.length.toString()+" labels");
-      this._labels = labels;
-    }else{
-      if(labels.length != this._numValues)
-        throw ("You set a list of "+labels.length.toString()+" labels but the dataSet has "+this._labels.length.toString()+" labels");
-      this._labels = labels;
+    this.title = json.title;
+    this._isSupervised = json.isSupervised;
+    this._numValues = json.numValues;
+    this._numClassValues = json.numClassValues;
+    this._instances = [];
+
+    for(int i = 0; i < json.instances.length; i++){
+      this.addInstance(json.instances[i].elements, isForTrain: json.instances[i].isForTrain);
     }
   }
 
-  void setLabelAt(int index, String label){
-    this._labels[index] = label;
+  ///
+  /// Get the labels of the dataSet.
+  ///
+
+  List<String> get labels => this._labels;
+
+  ///
+  /// The number of labels should be equal to number of values and class values. If not an exception will be throw.
+  ///
+
+  void set labels(List <String> labels){
+
+    if(labels.length != (this.numValues + this.numClassValues))
+      throw("The number of labels must be the same as the number of values and class values.");
+    this._labels = labels;
+
   }
+
+  ///
+  /// Set a label at index.
+  ///
+
+  void setLabelAt(int index, String label){
+
+    this._labels[index] = label;
+
+  }
+
+  ///
+  /// Return true if the dataSet contains class values. If not it will return false.
 
   bool get isSupervised => this._isSupervised;
 
+  ///
+  /// Return the number of values.
+  ///
+
   int get numValues => _numValues;
 
+  ///
+  /// Return the number of class values. If the dataSet is unsupervised, the number of class values will be 0.
+  ///
+
   int get numClassValues => _numClassValues;
+
+  ///
+  /// Return the number of instances for the train process.
+  ///
+
+  int get numberTrainInstances => this.trainSet.length;
+
+  ///
+  /// Return the number of instances for the test process.
+  ///
+
+  int get numberTestInstances => this.testSet.length;
+
+  ///
+  /// Return the number of instances of the dataSet.
+  ///
+
+  int get numberInstances => this.instances.length;
+
+  ///
+  /// Return a list with all the instances of the dataSet.
+  ///
 
   List<Instance> get instances => this._instances;
 
   ///
-  /// All instance must be supervised if the dataSet is supervised or unsupervised if the dataSet is unsupervised.
+  /// Set instances of the dataSet
   ///
 
   void set instances (List<Instance> instances){
-    this._instances=[];
+
+    this._instances = [];
     for(Instance instance in instances){
-      if((this.isSupervised && !instance.isSupervised)||(!this.isSupervised && instance.isSupervised))
-        throw ("Invalid instance for this dataSet");
+      if(instance.elements.length != (this.numValues + this.numClassValues))
+        throw("The number of elements in all instances must be the same as the number of values and class values.");
       this._instances.add(instance);
     }
+
   }
 
   ///
@@ -110,12 +174,8 @@ class DataSet {
   List <Instance> get trainSet{
     List <Instance> temp = [];
     for (Instance instance in this.instances){
-      if(instance.isForTrain == null){
-       throw ("No instances has not been set for train or test. Before you use the train set or test set you must set the instances for train and test");
-      }else{
-        if(instance.isForTrain){
+      if(instance.isForTrain){
           temp.add(instance);
-        }
       }
     }
     return temp;
@@ -126,24 +186,16 @@ class DataSet {
   ///
 
   List <Instance> get testSet{
+
     List <Instance> temp = [];
     for (Instance instance in this.instances){
-      if(instance.isForTrain == null){
-        throw ("No instances has not been set for train or test. Before you use the train set or test set you must set the instances for train and test");
-      }else {
-        if (!instance.isForTrain) {
+      if (!instance.isForTrain) {
           temp.add(instance);
-        }
       }
     }
     return temp;
+
   }
-
-  int get numberTrainInstances => this.trainSet.length;
-
-  int get numberTestInstances => this.testSet.length;
-
-  int get numberInstances => this.instances.length;
 
   ///
   /// Use to set the number of train instance and the number of test instance.
@@ -152,7 +204,7 @@ class DataSet {
   ///   exampleDataSet.sets(5); => 5 instance will be for train and the rest will be for test.
   ///
 
-  void set sets(int numberInstanceTrain){
+  void set trainTestSets(int numberInstanceTrain){
     if(this._instances.isEmpty){
       throw("The dataSet has no instances to set");
     }else{
@@ -167,12 +219,47 @@ class DataSet {
   }
 
   List<List<double>> get instancesValues{
+
     List<List<double>> temp = [];
     for(Instance instance in this.instances){
-      temp.add(instance.allValues);
+      temp.add(instance.elements);
     }
     return temp;
+
   }
+
+  ///
+  /// Return the values of an instance.
+  ///
+
+  List<double> instanceValues(int index){
+
+    List <double> temp = [];
+    for(int i = 0; i < this.numValues; i++){
+      temp.add(this.instances[index].elements[i]);
+    }
+    return temp;
+
+  }
+
+  ///
+  /// Return the class values of an instance.
+  ///
+  /// If the dataSet is unsupervised, an exception will be thrown.
+  ///
+
+  List<double> instanceClassValues(int index){
+
+    if(!isSupervised)
+      throw ("DataSet unsupervised does not have class values");
+    List <double> temp = [];
+    for(int i = 0; i < this.numClassValues; i++){
+      temp.add(this.instances[index].elements[i]);
+    }
+    return temp;
+
+  }
+
 
   ///
   /// Return the min value of all the attributes and class values(if exists).
@@ -180,17 +267,13 @@ class DataSet {
   ///
 
   List<double> get minValues{
-    int numberRows = 0;
+
     List<double> minRow = [];
-    if(this.isSupervised){
-      numberRows += this.numValues + this.numClassValues;
-    }else{
-      numberRows += this.numValues;
-    }
-    for(int i = 0; i < numberRows; i++){
-      minRow.add(this.getRow(i).reduce(min));
+    for(int i = 0; i < this.numValues + this.numClassValues; i++){
+      minRow.add(this.getColumn(i).reduce(min));
     }
     return minRow;
+
   }
 
   ///
@@ -199,15 +282,10 @@ class DataSet {
   ///
 
   List<double> get maxValues{
-    int numberRows = 0;
+
     List<double> maxRow = [];
-    if(this.isSupervised){
-      numberRows += this.numValues + this.numClassValues;
-    }else{
-      numberRows += this.numValues;
-    }
-    for(int i = 0; i < numberRows; i++){
-      maxRow.add(this.getRow(i).reduce(max));
+    for(int i = 0; i < this.numValues + this.numClassValues; i++){
+      maxRow.add(this.getColumn(i).reduce(max));
     }
     return maxRow;
   }
@@ -218,15 +296,10 @@ class DataSet {
   ///
 
   List<double> get meanValues{
-    int numberRows = 0;
+
     List<double> meanRow = [];
-    if(this.isSupervised){
-      numberRows += this.numValues + this.numClassValues;
-    }else{
-      numberRows += this.numValues;
-    }
-    for(int i = 0; i < numberRows; i++){
-      List <double> temp = this.getRow(i);
+    for(int i = 0; i < this.numValues + this.numClassValues; i++){
+      List <double> temp = this.getColumn(i);
       double mean = 0.0;
       for(double value in temp){
         mean += value;
@@ -234,41 +307,32 @@ class DataSet {
       meanRow.add(double.parse((mean/temp.length).toStringAsFixed(2)));
     }
     return meanRow;
+
   }
 
   ///
-  /// The number of values should be equal to the number of attributes in the case of a DataSet unsupervised and
-  /// as the number of attributes and class values ​​in case of a dataSet supervised.
-  /// If the new instance is already available in the DataSet will be included there .
-  /// You can specify whether the new instance is to train or test
+  /// Add a new instance to the dataSet
+  /// The number of values should be equal to the number of attributes and class values. If not an exception will be thrown.
   ///
 
-  void addInstance(List <double> values, [bool isForTrain]){
-    if(this.isSupervised){
-      if(values.length != (this._numValues + this._numClassValues))
-        throw ("You add a instance of "+values.length.toString()+" values, but an instance in this dataSet has "+this._numValues.toString()+" attributes and "+this._numClassValues.toString()+" class values. So an instance must have a total of "+(this._numValues+this._numClassValues).toString()+" values");
-      Instance temp = new Instance(values.getRange(0,this._numValues).toList(),classValues: values.getRange(this._numValues, this._numValues + this._numClassValues).toList());
+  void addInstance(List <double> values, {bool isForTrain}){
+
+    if(values.length != (this.numValues + this.numClassValues))
+      throw("The number of elements the new intance must be the same as the number of values and class values.");
+
+    if(!this._repeatedInstance(values)){
+      Instance temp = new Instance();
+      temp.elements = values;
       if(isForTrain != null){
         temp.isForTrain = isForTrain;
       }
-      if(!this.hasInstance(temp.allValues)){
-        this._instances.add(temp);
-      }
-    }else{
-      if(values.length != this._numValues)
-        throw ("You add a instance of "+values.length.toString()+" values, but an instance in this dataSet has "+this._numValues.toString()+" attributes. So an instance must have a total of "+this._numValues.toString()+" values");
-      Instance temp = new Instance(values);
-      if(isForTrain != null){
-        temp.isForTrain = isForTrain;
-      }
-      if(!this.hasInstance(temp.allValues)){
-        this._instances.add(temp);
-      }
+      this._instances.add(temp);
     }
+
   }
 
   ///
-  /// Add multiple instances with just one call.
+  /// Add multiple instances.
   ///
 
   void addInstances(List<List<double>>values){
@@ -278,10 +342,10 @@ class DataSet {
   }
 
   ///
-  /// Returns true if the instance provided by parameter already available in the DataSet.
+  /// Returns true if the instance provided by parameter is already available in the DataSet.
   ///
 
-  bool hasInstance(List <double> instance){
+  bool _repeatedInstance(List <double> instance){
     bool repeated = false;
     for(List <double> temp in this.instancesValues){
       Function eq = const ListEquality().equals;
@@ -292,126 +356,73 @@ class DataSet {
     return false;
   }
 
+  ///
+  /// Remove an instance at index.
+  ///
+
   void removeInstance(int index){
     this._instances.removeAt(index);
   }
 
   ///
-  /// A row represents all values that an attribute or a class value can take.
-  /// For setting a Row the number of values has to be the same as the number of instances.
-  /// Its possible to set the label of that row.
+  /// Remove all the instances in the dataSet.
   ///
 
-  void setRow(int index, List <double> values, [String label]){
-    if(label!= null) {
-      this.setLabelAt(index, label);
-    }
-    if(_isSupervised){
-      if(index < this._numValues){
-        if(values.length != this._instances.length)
-          throw ("You set a row of "+values.length.toString()+" values, but the dataSet has rows of "+this._instances.length.toString()+" values.");
-        int count = 0;
-        for(Instance temp in this._instances){
-          temp.values[index] = values[count];
-          count++;
-        }
-      }else{
-        if(values.length != this._instances.length)
-          throw ("You set a row of "+values.length.toString()+" values, but the dataSet has rows of "+this._instances.length.toString()+" values.");
-        index-=this._numValues;
-        int count = 0;
-        for(Instance temp in this._instances){
-          temp.classValues[index] = values[count];
-          count++;
-        }
-      }
-    }else{
-      if(values.length != this._instances.length)
-        throw ("You set a row of "+values.length.toString()+" values, but the dataSet has rows of "+this._instances.length.toString()+" values.");
-      int count = 0;
-      for(Instance temp in this._instances){
-        temp.values[index] = values[count];
-        count++;
-      }
-    }
+  void removeAllInstance(){
+    this._instances = [];
   }
 
-  List<double> getRow(int index){
+  ///
+  /// Set the values of a column. The number of values of the new column must be the same as the number of values of the
+  /// other columns.
+  ///
+
+  void setColumn(int index, List <double> values){
+
+    if(values.length != this.instances.length)
+      throw ("The number of elements of the new column has to be equal to the number of items of other columns");
+    for(Instance instance in this.instances){
+      instance.elements[index] = values [index];
+    }
+
+  }
+
+  //
+  // Return a column of the dataSet. If you imagine the dataSet as a bi-dimensional table, the rows are the instances and with
+  // this method you can get the column.
+  //
+
+  List<double> getColumn(int index){
+
     List <double> values = [];
-    if(index < this._numValues){
-      for(Instance temp in this._instances){
-        values.add(temp.values[index]);
-      }
-    }else{
-      index -= this._numValues;
-      for(Instance temp in this._instances){
-        values.add(temp.classValues[index]);
-      }
+    for(Instance temp in this._instances) {
+      values.add(temp.elements[index]);
     }
     return values;
+
   }
 
-  ///
-  /// For adding a Row the number of values has to be the same as the number of instances.
-  /// If the row is a class value and the dataSet is unsupervised an exception will be throw.
-  ///
+  //
+  // Return the JsonObject of the dataSet.
+  //
 
-  void addRow(List <double> values, String label, bool isClassValue){
-    if(!this._isSupervised){
-     throw("Unsupervised dataset cant hava class values");
-    }else{
-      if(isClassValue){
-        if(values.length != this._instances.length)
-          throw ("You set a row of "+values.length.toString()+" values, but the dataSet has rows of "+this._instances.length.toString()+" values.");
-        this._numClassValues++;
-        int count = 0;
-        for(Instance temp in this._instances){
-          temp.addClassValue(values[count]);
-          count++;
-        }
+  JsonObject toJSON(){
 
-        this._labels.add(label);
-      }else{
-        if(values.length != this._instances.length)
-          throw ("You set a row of "+values.length.toString()+" values, but the dataSet has rows of "+this._instances.length.toString()+" values.");
-        this._numValues++;
-        int count = 0;
-        for(Instance temp in this._instances){
-          temp.addValue(values[count]);
-          count++;
-        }
-        this._labels.insert(_numValues, label);
-      }
+    JsonObject dataSet = new JsonObject();
+    dataSet.title = this.title;
+    dataSet.isSupervised = this.isSupervised;
+    dataSet.numValues = this.numValues;
+    dataSet.numClassValues = this.numClassValues;
+    dataSet.instances = new List();
+
+    for(Instance instance in this.instances){
+      dataSet.instance.add(instance.toJSON());
     }
 
+    return dataSet;
+
   }
 
-  void removeRow(int index){
-    this._labels.removeAt(index);
-    if(_isSupervised){
-      if(index < this._numValues){
-        this._numValues --;
-        for(Instance temp in this._instances){
-          temp.removeValue(index);
-        }
-      }else{
-        if(this.numClassValues > 1){
-          this._numClassValues--;
-          index-=this._numValues;
-          for(Instance temp in this._instances){
-            temp.removeClassValue(index);
-          }
-        }else{
-          throw("Supervised dataSet must have 1 or more class values");
-        }
-      }
-    }else{
-      this._numValues--;
-      for(Instance temp in this._instances){
-        temp.removeValue(index);
-      }
-    }
-  }
 }
 
 

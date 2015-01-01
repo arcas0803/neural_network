@@ -45,7 +45,7 @@ abstract class SupervisedLearningRule extends LearningRule{
   ///   2. If all stop conditions are reached stop, if not return to 1.
   ///
 
-  void learn(List<Instance>trainSet){
+  void learn(List <Instance> trainSet){
 
     for(Instance instance in trainSet){
       if(!instance.isSupervised){
@@ -60,7 +60,7 @@ abstract class SupervisedLearningRule extends LearningRule{
 
   void learnIteration(List<Instance>trainSet){
     for(Instance trainInstance in trainSet){
-      this.learnPattern(trainInstance.values, trainInstance.classValues);
+      this.learnPattern(trainInstance.attributes, trainInstance.classValues);
     }
     this.currentIteration++;
     this.errorIterations.add(this.errorFunction.totalError());

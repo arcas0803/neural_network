@@ -1,9 +1,11 @@
 // Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
+
 library ActivationFunction.LogFunction;
 
 import 'activation_function.dart';
 import 'dart:math';
+import "package:json_object/json_object.dart";
 
 class Log extends ActivationFunction {
 
@@ -12,4 +14,11 @@ class Log extends ActivationFunction {
 
   double getDerivedOutput(double value) => 1/value;
 
+  JsonObject toJSON(){
+
+    JsonObject activationFunction = new JsonObject();
+    activationFunction.type = "Log";
+    return activationFunction;
+
+  }
 }

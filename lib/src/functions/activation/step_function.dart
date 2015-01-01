@@ -1,8 +1,10 @@
 // Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
+
 library ActivationFunction.StepFunction;
 
 import 'activation_function.dart';
+import "package:json_object/json_object.dart";
 
 class Step extends ActivationFunction {
 
@@ -23,6 +25,16 @@ class Step extends ActivationFunction {
 
   double getDerivedOutput(double value){
     return null;
+  }
+
+  JsonObject toJSON(){
+
+    JsonObject activationFunction = new JsonObject();
+    activationFunction.type = "Step";
+    activationFunction.maximum = this.max;
+    activationFunction.minimum = this.min;
+    return activationFunction;
+
   }
 
 }

@@ -1,10 +1,12 @@
 // Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
+
 library Arquitecture.Layer;
 
 import 'neuron.dart';
 import '../functions/activation/activation_function.dart';
 import '../functions/input/input_function.dart';
+import "package:json_object/json_object.dart";
 
 ///
 /// Structural unit that includes a set of neurons.
@@ -27,6 +29,26 @@ class Layer {
     }else {
        this.neurons = [];
     }
+  }
+
+  //
+  // Create a Layer from an JsonObject.
+  //
+  // JSON format:
+  // {
+  //  "id" : Example,
+  //  "neurons" : [JsonObject neuron1,JsonObject neuron2],
+  //  }
+  //
+
+  Layer.fromJSON(JsonObject json){
+
+    this.id = json.id;
+    this.neurons = [];
+    for(int i = 0; i < json.neurons.length; i++){
+      this.addNeuron(new Neuron.fromJSON(json.neurons[i]));
+    }
+
   }
 
   ///
@@ -64,6 +86,12 @@ class Layer {
     }
   }
 
+  ///
+  /// Add a new Neuron.
+  ///
+  /// If the neuron is null an exception will be thrown.
+  ///
+
   void addNeuron(Neuron neuron) {
     if (neuron == null) {
       throw ("Neuron is empty");
@@ -71,23 +99,41 @@ class Layer {
     this.neurons.add(neuron);
   }
 
+  ///
+  /// Remove all neurons.
+  ///
+
   void removeAllNeurons() {
     this.neurons = [];
   }
+
+  ///
+  /// Remove a neuron at index.
+  ///
 
   void removeNeuronAt(int index) {
     this.neurons.removeAt(index);
   }
 
+  ///
+  /// Return a neuron at index.
+  ///
+
   Neuron getNeuron(int index) {
     return this.neurons[index];
   }
 
+  ///
+  /// Set a Neuron at index.
+  ///
+
   void setNeuron(int index, Neuron neuron) {
+
     if (neuron == null) {
       throw ("Neuron is empty");
     }
     this.neurons[index] = neuron;
+
   }
 
   ///
@@ -95,8 +141,26 @@ class Layer {
   ///
 
   void calculateOutput() {
+
     for (Neuron neuron in this.neurons) {
       neuron.calculateOutput();
     }
+
+  }
+
+  //
+  // Return the JsonObject of the layer.
+  //
+
+  JsonObject toJSON(){
+
+    JsonObject layer = new JsonObject();
+    layer.id = this.id;
+    layer.neurons = new List();
+    for (Neuron neuron in this.neurons){
+      layer.neurons.add(neuron.toJSON());
+    }
+    return layer;
+
   }
 }

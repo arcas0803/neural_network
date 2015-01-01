@@ -58,7 +58,7 @@ main() {
       Neuron neuronTest = new Neuron("NeuronTest");
 
       expect(neuronTest.activationFunction == null, true);
-      expect(neuronTest.inputFunction == null, true);
+      expect(neuronTest.activationFunction == null, true);
       expect(neuronTest.inputConnections.isEmpty , true);
       expect(neuronTest.outputConnections.isEmpty, true);
       expect(neuronTest.isThreshold, false);
@@ -239,7 +239,7 @@ main() {
       expect(() => dataSetTest.trainSet, throws);
       expect(() => dataSetTest.testSet, throws);
 
-      dataSetTest.sets = 2;
+      dataSetTest.trainTestSets = 2;
 
       expect(dataSetTest.numberTrainInstances == 2, true);
       expect(dataSetTest.numberTestInstances == 1, true);
@@ -248,11 +248,11 @@ main() {
       expect(dataSetTest.maxValues, equals([5.1, 4.3, 5.2]));
       expect(dataSetTest.meanValues, equals([3.2, 4.23, 3.37]));
 
-      dataSetTest.setRow(0,[1.1,1.2,1.3]);
+      dataSetTest.setColumn(0,[1.1,1.2,1.3]);
 
-      expect(dataSetTest.getRow(0), equals([1.1,1.2,1.3]));
+      expect(dataSetTest.getColumn(0), equals([1.1,1.2,1.3]));
 
-      expect(()=>dataSetTest.setRow(0,[1.1,1.2,1.3,1.4]), throws);
+      expect(()=>dataSetTest.setColumn(0,[1.1,1.2,1.3,1.4]), throws);
 
       expect(() => dataSetTest.removeRow(2),throws);
 
@@ -301,9 +301,9 @@ main() {
       dataSetTest.instances = normalize.applyFilter(dataSetTest);
 
       expect(dataSetTest.instances.length==3,true);
-      expect(dataSetTest.getRow(0), equals([0.0,1.0,0.5000000000000011]));
-      expect(dataSetTest.getRow(1), equals([0.0,1.0,0.5000000000000022]));
-      expect(dataSetTest.getRow(2), equals([0.0,1.0,0.5]));
+      expect(dataSetTest.getColumn(0), equals([0.0,1.0,0.5000000000000011]));
+      expect(dataSetTest.getColumn(1), equals([0.0,1.0,0.5000000000000022]));
+      expect(dataSetTest.getColumn(2), equals([0.0,1.0,0.5]));
     });
   });
 
@@ -439,7 +439,7 @@ main() {
       DataSet dataSetTest = new DataSet("TEST",2,numClassValues:1);
       dataSetTest.labels = ["At1","At2","At3"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3],[2.3, 4.3, 2.5],[2.2, 4.2, 2.4]]);
-      dataSetTest.sets = 2;
+      dataSetTest.trainTestSets = 2;
 
 
       Adaline adaline = new Adaline(2,5);
@@ -455,7 +455,7 @@ main() {
       DataSet dataSetTest = new DataSet("TEST",2,numClassValues:1);
       dataSetTest.labels = ["At1","At2","At3"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3],[2.3, 4.3, 2.5],[2.2, 4.2, 2.4]]);
-      dataSetTest.sets = 2;
+      dataSetTest.trainTestSets = 2;
 
 
       Perceptron perceptron = new Perceptron(2,5);
@@ -470,7 +470,7 @@ main() {
       DataSet dataSetTest = new DataSet("TEST",2,numClassValues:2);
       dataSetTest.labels = ["At1","At2","At3","At4"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3,1.2],[2.3, 4.3, 2.5,1.3],[2.2, 4.2, 2.4,1.5]]);
-      dataSetTest.sets = 2;
+      dataSetTest.trainTestSets = 2;
 
       MultilayerPerceptron multiLayerPerceptron = new MultilayerPerceptron([2,4,2],50000);
 

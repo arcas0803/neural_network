@@ -40,7 +40,7 @@ class RadialLearning extends BasicLearningRule{
         connection.weightValue = centroid[j];
         j++;
       }
-      (neuron.inputFunction as Radial).amplitude = amplitudes[i];
+      (neuron.activationFunction as Radial).amplitude = amplitudes[i];
       i++;
     }
   }

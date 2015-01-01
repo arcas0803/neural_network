@@ -42,7 +42,7 @@ abstract class UnSupervisedLearningRule extends LearningRule{
 
   void learnIteration(List<Instance>trainSet){
     for(Instance trainInstance in trainSet){
-      this.learnPattern(trainInstance.values);
+      this.learnPattern(trainInstance.attributes);
       this.currentIteration++;
     }
   }

@@ -18,7 +18,7 @@ class K_Means{
     this.clusters = [];
     for(int i = 0; i < this.numCluster; i++){
       Cluster tempCluster = new Cluster();
-      tempCluster.initialization(this.instances[0].values.length);
+      tempCluster.initialization(this.instances[0].attributes.length);
       this.clusters.add(tempCluster);
     }
   }
@@ -36,7 +36,7 @@ class K_Means{
       for(int i = 0; i < cluster.centroid.length; i++){
         double mean = 0.0;
         for(int j = 0; cluster.instances.length; j++){
-          mean += cluster.instances[j].values[i];
+          mean += cluster.instances[j].attributes[i];
         }
         centroid.add(mean/cluster.instances.length);
       }
@@ -53,7 +53,7 @@ class K_Means{
     for(Instance instance in this.instances){
       List<double> distances = [];
       for(Cluster cluster in this.clusters){
-        distances.add(this.distance(cluster.centroid, instance.values));
+        distances.add(this.distance(cluster.centroid, instance.attributes));
       }
       this.clusters[distances.indexOf(distances.reduce(min))].instances.add(instance);
     }

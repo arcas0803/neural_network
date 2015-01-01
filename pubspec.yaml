@@ -2,9 +2,10 @@ name: neural_network
 description: >
   Library for creating artificial neural networks.
 version: 0.0.1
-#author: <Alvaro Arcas Garcia> <arcas0803@gmail.com>
-#homepage: https://www.example.com
+author: <Alvaro Arcas Garcia> <arcas0803@gmail.com>
+homepage: https://github.com/arcas0803/neural_network
 dependencies:
   collection: ">=1.1.0 <2.0.0"
+  json_object: ">=1.0.18+2 <2.0.0"
 dev_dependencies:
   unittest: any

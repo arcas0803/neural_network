@@ -1,10 +1,12 @@
 // Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
+
 library Arquitecture.Network;
 
 import 'layer.dart';
 import 'neuron.dart';
 import '../learning_rule/learning_rule.dart';
+import "package:json_object/json_object.dart";
 
 ///
 /// Set of interconnected layers.
@@ -21,6 +23,24 @@ class Network {
 
   Network() {
     this.layers = [];
+  }
+
+  //
+  // Create a Network from an JsonObject.
+  //
+  // JSON format:
+  // {
+  //  "layers" : [JsonObject layer1,JsonObject layer2],
+  //  }
+  //
+
+  Network.fromJSON(JsonObject json){
+
+    this.layers = [];
+    for(int i = 0; i < json.layers.length; i++){
+      this.addLayer(new Layer.fromJSON(json.layers[i]));
+    }
+
   }
 
   ///
@@ -142,5 +162,20 @@ class Network {
         }
       }
     }
+  }
+
+  //
+  // Return the JsonObject of the network.
+  //
+
+  JsonObject toJSON(){
+
+    JsonObject network = new JsonObject();
+    network.layers = new List();
+    for(Layer layer in this.layers){
+      network.layers.add(layer.toJSON());
+    }
+    return network;
+
   }
 }
