@@ -66,7 +66,8 @@ class DataSet {
   //  "isSupervised" : true,
   //  "numValues" : 2,
   //  "numClassValues" : 2,
-  //  "instance" : [ {"elements":[2.1, 2.1, 2.1, 2.1], "isForTrain" : true } , {"elements":[2.1, 2.1, 2.1, 2.1], "isForTrain" : true } ]
+  //  "labels" : ["Label1", "Label2"]
+  //  "instances" : [ {"elements":[2.1, 2.1, 2.1, 2.1], "isForTrain" : true } , {"elements":[2.1, 2.1, 2.1, 2.1], "isForTrain" : true } ]
   //  }
   //
 
@@ -76,6 +77,7 @@ class DataSet {
     this._isSupervised = json.isSupervised;
     this._numValues = json.numValues;
     this._numClassValues = json.numClassValues;
+    this.labels = json.labels;
     this._instances = [];
 
     for(int i = 0; i < json.instances.length; i++){
@@ -381,8 +383,10 @@ class DataSet {
 
     if(values.length != this.instances.length)
       throw ("The number of elements of the new column has to be equal to the number of items of other columns");
+    int i = 0;
     for(Instance instance in this.instances){
-      instance.elements[index] = values [index];
+      instance.elements[index] = values[i];
+      i++;
     }
 
   }
@@ -413,10 +417,14 @@ class DataSet {
     dataSet.isSupervised = this.isSupervised;
     dataSet.numValues = this.numValues;
     dataSet.numClassValues = this.numClassValues;
+    dataSet.labels = new List();
+    for(String label in this.labels){
+      dataSet.labels.add(label);
+    }
     dataSet.instances = new List();
 
     for(Instance instance in this.instances){
-      dataSet.instance.add(instance.toJSON());
+      dataSet.instances.add(instance.toJSON());
     }
 
     return dataSet;

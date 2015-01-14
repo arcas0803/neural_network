@@ -1,7 +1,7 @@
 name: neural_network
 description: >
   Library for creating artificial neural networks.
-version: 0.0.1
+version: 0.0.2
 author: <Alvaro Arcas Garcia> <arcas0803@gmail.com>
 homepage: https://github.com/arcas0803/neural_network
 dependencies:

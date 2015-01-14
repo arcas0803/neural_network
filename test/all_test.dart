@@ -216,8 +216,8 @@ main() {
       dataSetTest.labels = ["At1","At2","At3"];
       expect(dataSetTest.labels, equals(["At1","At2","At3"]));
 
-      dataSetTest.setLabelAt(0,"testSet");
-      expect(dataSetTest.labels, equals(["testSet","At2","At3"]));
+      dataSetTest.setLabelAt(0,"testLabel");
+      expect(dataSetTest.labels, equals(["testLabel","At2","At3"]));
 
       expect(() => dataSetTest.labels = ["At1","At2","At3","At4"], throwsA(new isInstanceOf<String>()));
 
@@ -249,16 +249,23 @@ main() {
       expect(dataSetTest.meanValues, equals([3.2, 4.23, 3.37]));
 
       dataSetTest.setColumn(0,[1.1,1.2,1.3]);
-
       expect(dataSetTest.getColumn(0), equals([1.1,1.2,1.3]));
 
       expect(()=>dataSetTest.setColumn(0,[1.1,1.2,1.3,1.4]), throws);
 
-      expect(() => dataSetTest.removeRow(2),throws);
+      dataSetTest = new DataSet.fromJSON(dataSetTest.toJSON());
 
-      dataSetTest.removeRow(0);
-
-      expect(dataSetTest.instancesValues,equals([[4.3, 2.5],[4.2, 2.4],[4.2, 5.2]]));
+      expect(dataSetTest.isSupervised, true);
+      expect(dataSetTest.title == "TEST", true);
+      expect(dataSetTest.numValues == 2, true);
+      expect(dataSetTest.numClassValues == 1, true);
+      expect(dataSetTest.instances.isEmpty , false);
+      expect(dataSetTest.labels.isEmpty, false);
+      expect(dataSetTest.numberTrainInstances == 2, true);
+      expect(dataSetTest.numberTestInstances == 1, true);
+      expect(dataSetTest.minValues, equals([1.1,4.2,2.4]));
+      expect(dataSetTest.maxValues, equals([1.3, 4.3, 5.2]));
+      expect(dataSetTest.meanValues, equals([1.2, 4.23, 3.37]));
 
     });
 
@@ -267,7 +274,7 @@ main() {
       expect(dataSetTest.isSupervised, false);
       expect(dataSetTest.title == "TEST", true);
       expect(dataSetTest.numValues == 2, true);
-      expect(dataSetTest.numClassValues == null, true);
+      expect(dataSetTest.numClassValues == 0, true);
       expect(dataSetTest.instances.isEmpty , true);
       expect(dataSetTest.labels.isEmpty, true);
     });

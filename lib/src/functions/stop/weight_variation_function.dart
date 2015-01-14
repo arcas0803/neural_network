@@ -4,6 +4,7 @@ library StopCondition.WeightChange;
 
 import 'stop_function.dart';
 import '../../learning_rule/learning_rule.dart';
+import "package:json_object/json_object.dart";
 
 /// Sets a threshold value and if the variation of all weights in the network are lower than the threshold training stops.
 
@@ -15,6 +16,7 @@ class WeightVariation implements StopCondition {
   WeightVariation(this.variation, this.learningRule) {}
 
   bool isReached(){
+
     List <double> actualVariations;
     for(var layer in learningRule.network.layers){
       for(var neuron in layer.neurons){
@@ -29,5 +31,16 @@ class WeightVariation implements StopCondition {
       }
     }
     return true;
+
+  }
+
+  JsonObject toJSON(){
+
+    JsonObject stopFunction = new JsonObject();
+    stopFunction.type = "WeightVariation";
+    stopFunction.variation = this.variation;
+    stopFunction.learningRule = this.learningRule.toJSON();
+    return stopFunction;
+
   }
 }
