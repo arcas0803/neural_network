@@ -54,7 +54,7 @@ class DataSet {
 
   }
 
-  DataSet.FromJSON(JsonObject json){
+  DataSet.fromJSON(JsonObject json){
     this.title = json.title;
     this._labels = json.labels;
     this._numValues = json.numValues;

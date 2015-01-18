@@ -5,7 +5,6 @@ library neural_network.test;
 
 import 'package:unittest/unittest.dart';
 import 'package:neural_network/neural_network.dart';
-import 'package:json_object/json_object.dart';
 
 main() {
 
@@ -55,7 +54,7 @@ main() {
       expect(() => dataSetTest.removeInstance(8), throwsRangeError);
       expect(() => dataSetTest.trainSet, throws);
       expect(() => dataSetTest.testSet, throws);
-      dataSetTest.trainTestSets(2);
+      dataSetTest.trainTestSet = 2;
       expect(dataSetTest.numberTrainInstances == 2, true);
       expect(dataSetTest.numberTestInstances == 1, true);
 
@@ -138,13 +137,6 @@ main() {
       expect((weightTest.previousValue - 0.1) == weightTest.value, true);
       expect((weightTest.value - weightTest.previousValue).abs() == weightTest.variation, true);
 
-      weightTest = new Weight(2.1);
-      weightTest.increment(0.1);
-      weightTest = new Weight.fromJSON(weightTest.toJSON());
-      expect(weightTest.value == 2.2, true);
-      expect(weightTest.previousValue == 2.1, true);
-      expect(weightTest.variation == 0.10000000000000009, true);
-
     });
 
     test('[Connection test]', () {
@@ -168,19 +160,6 @@ main() {
 
       expect((connectionTest.weightPreviousValue - 0.1) == connectionTest.weightValue, true);
       expect((connectionTest.weightValue - connectionTest.weightPreviousValue).abs() == connectionTest.weightVariation, true);
-
-      connectionTest = new Connection(new Neuron("origin"), new Neuron("destiny"), 2.0);
-      connectionTest.increment(0.1);
-
-      connectionTest = new Connection.fromJSON(connectionTest.toJSON());
-
-      expect(connectionTest.neuronOrigin.id == "origin", true);
-      expect(connectionTest.neuronDestination.id == "destiny", true);
-
-      expect(connectionTest.weightValue == 2.1, true);
-      expect(connectionTest.weightPreviousValue == 2.0, true);
-      expect(connectionTest.weightVariation == 0.10000000000000009, true);
-
 
     });
 
@@ -233,10 +212,6 @@ main() {
 
       expect(neuronTest.hasInputConnection, false);
       expect(neuronInputTest.hasOutputConnection, false);
-
-      var json = objectToJson(neuronTest);
-      print(json);
-
 
     });
 
@@ -471,7 +446,7 @@ main() {
       DataSet dataSetTest = new DataSet("TEST", 2, numClassValues:1);
       dataSetTest.labels = ["At1", "At2", "At3"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3], [2.3, 4.3, 2.5], [2.2, 4.2, 2.4]]);
-      dataSetTest.trainTestSets = 2;
+      dataSetTest.trainTestSet = 2;
 
 
       Adaline adaline = new Adaline(2, 5);
@@ -487,7 +462,7 @@ main() {
       DataSet dataSetTest = new DataSet("TEST", 2, numClassValues:1);
       dataSetTest.labels = ["At1", "At2", "At3"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3], [2.3, 4.3, 2.5], [2.2, 4.2, 2.4]]);
-      dataSetTest.trainTestSets = 2;
+      dataSetTest.trainTestSet = 2;
 
 
       Perceptron perceptron = new Perceptron(2, 5);
@@ -502,7 +477,7 @@ main() {
       DataSet dataSetTest = new DataSet("TEST", 2, numClassValues:2);
       dataSetTest.labels = ["At1", "At2", "At3", "At4"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3, 1.2], [2.3, 4.3, 2.5, 1.3], [2.2, 4.2, 2.4, 1.5]]);
-      dataSetTest.trainTestSets = 2;
+      dataSetTest.trainTestSet = 2;
 
       MultilayerPerceptron multiLayerPerceptron = new MultilayerPerceptron([2, 4, 2], 50000);
 
