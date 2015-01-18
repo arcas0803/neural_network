@@ -45,7 +45,7 @@ class Instance {
   // Return the JsonObject of the instance.
   //
 
-  JsonObject toJSON(){
+  JsonObject toJSON() {
 
     JsonObject instance = new JsonObject();
     instance.elements = this.elements;

@@ -6,17 +6,14 @@ library Filter.Randomization;
 import "../dataset/dataset_export.dart";
 import 'filter.dart';
 
-class RandomizeFilter extends Filter {
+class RandomizeFilter implements Filter {
 
   RandomizeFilter() {
-
-    this.name = "Randomize";
-
   }
 
   List<Instance> applyFilter(DataSet input) {
 
-    if(input.instances.length > 0){
+    if (input.instances.length > 0) {
       input.instances.shuffle();
     }
     return input.instances;

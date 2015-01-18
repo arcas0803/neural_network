@@ -51,10 +51,10 @@ export 'src/learning_rule/basic_learning.dart';
 export 'src/learning_rule/back_propagation_learning.dart';
 export 'src/learning_rule/radial_learning.dart';
 
-export'src/nets/perceptron.dart';
-export'src/nets/adaline.dart';
-export'src/nets/multilayer_perceptron.dart';
-export'src/nets/radial_base.dart';
+export 'src/nets/perceptron.dart';
+export 'src/nets/adaline.dart';
+export 'src/nets/multilayer_perceptron.dart';
+export 'src/nets/radial_base.dart';
 
 
 

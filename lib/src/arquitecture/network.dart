@@ -25,24 +25,6 @@ class Network {
     this.layers = [];
   }
 
-  //
-  // Create a Network from an JsonObject.
-  //
-  // JSON format:
-  // {
-  //  "layers" : [JsonObject layer1,JsonObject layer2],
-  //  }
-  //
-
-  Network.fromJSON(JsonObject json){
-
-    this.layers = [];
-    for(int i = 0; i < json.layers.length; i++){
-      this.addLayer(new Layer.fromJSON(json.layers[i]));
-    }
-
-  }
-
   ///
   /// Return the input neurons of the network.
   ///
@@ -64,7 +46,7 @@ class Network {
       throw ("Array length distinct");
     }
     int i = 0;
-    for (Neuron neuron in this.inputNeurons){
+    for (Neuron neuron in this.inputNeurons) {
       neuron.input = inputs[i];
       i++;
     }
@@ -76,7 +58,7 @@ class Network {
 
   List<double> get outputNetwork {
     List <double> output = [];
-    for(Neuron neuron in this.outputNeurons){
+    for (Neuron neuron in this.outputNeurons) {
       output.add(neuron.output);
     }
     return output;
@@ -86,7 +68,7 @@ class Network {
   /// Return true if the network has 1 or more layers.
   ///
 
-  bool get hasLayers{
+  bool get hasLayers {
     return this.layers.isNotEmpty;
   }
 
@@ -102,7 +84,7 @@ class Network {
 
   int get numNeurons {
     int count = 0;
-    for(Layer temp in this.layers){
+    for (Layer temp in this.layers) {
       count += temp.numNeurons;
     }
     return count;
@@ -154,28 +136,13 @@ class Network {
   /// Makes a full connection between all the layers of the network.
   ///
 
-  void connectLayers(){
-    for(int k = this.layers.length -1; k > 0; k--){
-      for(int i = 0; i < this.layers[k].neurons.length; i++){
-        for(int j = 0; j < this.layers[k-1].neurons.length; j++){
-          this.layers[k].neurons[i].addInputConnectionFromNeuron(this.layers[k-1].neurons[j]);
+  void connectLayers() {
+    for (int k = this.layers.length - 1; k > 0; k--) {
+      for (int i = 0; i < this.layers[k].neurons.length; i++) {
+        for (int j = 0; j < this.layers[k - 1].neurons.length; j++) {
+          this.layers[k].neurons[i].addInputConnectionFromNeuron(this.layers[k - 1].neurons[j]);
         }
       }
     }
-  }
-
-  //
-  // Return the JsonObject of the network.
-  //
-
-  JsonObject toJSON(){
-
-    JsonObject network = new JsonObject();
-    network.layers = new List();
-    for(Layer layer in this.layers){
-      network.layers.add(layer.toJSON());
-    }
-    return network;
-
   }
 }

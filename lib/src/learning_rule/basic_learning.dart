@@ -9,18 +9,19 @@ import "../arquitecture/connection.dart";
 
 /// Basic learning rule that most of the network use.
 
-class BasicLearningRule extends SupervisedLearningRule{
+class BasicLearningRule extends SupervisedLearningRule {
 
-  BasicLearningRule(int maxIterations):super(maxIterations){}
+  BasicLearningRule(int maxIterations):super(maxIterations) {
+  }
 
-  void updateWeights(List <double> outputError){
+  void updateWeights(List <double> outputError) {
     int i = 0;
 
     for (Neuron neuron in this.network.outputNeurons) {
       neuron.error = outputError[i];
       this.updateWeight(neuron);
       i++;
-      }
+    }
   }
 
   ///

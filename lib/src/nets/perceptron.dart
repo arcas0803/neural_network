@@ -12,20 +12,19 @@ import '../functions/error/mean_square_error.dart';
 import '../learning_rule/basic_learning.dart';
 
 
+class Perceptron extends Network {
 
-class Perceptron extends Network{
-
-  Perceptron(int numInputNeurons, int maxIterations):super(){
+  Perceptron(int numInputNeurons, int maxIterations):super() {
     this.createNetwork(numInputNeurons, maxIterations);
   }
 
-  void createNetwork(int numInputNeurons, int maxIterations){
+  void createNetwork(int numInputNeurons, int maxIterations) {
 
     Layer inputLayer = new Layer("InputLayer");
     inputLayer.createNeurons(numInputNeurons);
     //OutPut Layer
     Layer outputLayer = new Layer("OutputLayer");
-    outputLayer.createNeurons(1,inputFunction: new WeightCombination(), activationFunction: new Step());
+    outputLayer.createNeurons(1, inputFunction: new WeightCombination(), activationFunction: new Step());
 
     Neuron umbral = new Neuron("Umbral");
     umbral.input = 1.0;

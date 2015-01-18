@@ -24,11 +24,4 @@ class Min extends InputFunction {
 
   }
 
-  JsonObject toJSON(){
-
-    JsonObject inputFunction = new JsonObject();
-    inputFunction.type = "Min";
-    return inputFunction;
-
-  }
 }

@@ -13,20 +13,21 @@ class WeightVariation implements StopCondition {
   double variation;
   LearningRule learningRule;
 
-  WeightVariation(this.variation, this.learningRule) {}
+  WeightVariation(this.variation, this.learningRule) {
+  }
 
-  bool isReached(){
+  bool isReached() {
 
     List <double> actualVariations;
-    for(var layer in learningRule.network.layers){
-      for(var neuron in layer.neurons){
-        for(var variation in neuron.inputWeightsVariation){
+    for (var layer in learningRule.network.layers) {
+      for (var neuron in layer.neurons) {
+        for (var variation in neuron.inputWeightsVariation) {
           actualVariations.add(variation);
         }
       }
     }
-    for(double variation in actualVariations){
-      if(variation > this.variation){
+    for (double variation in actualVariations) {
+      if (variation > this.variation) {
         return false;
       }
     }
@@ -34,13 +35,4 @@ class WeightVariation implements StopCondition {
 
   }
 
-  JsonObject toJSON(){
-
-    JsonObject stopFunction = new JsonObject();
-    stopFunction.type = "WeightVariation";
-    stopFunction.variation = this.variation;
-    stopFunction.learningRule = this.learningRule.toJSON();
-    return stopFunction;
-
-  }
 }

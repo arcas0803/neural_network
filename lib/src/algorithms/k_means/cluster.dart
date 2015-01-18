@@ -5,17 +5,17 @@ library KMeans.Cluster;
 import 'dart:math';
 import '../../dataSet/instance.dart';
 
-class Cluster{
+class Cluster {
   List <double> centroid;
   List <Instance> instances;
 
-  Cluster(){
+  Cluster() {
     this.centroid = [];
     this.instances = [];
   }
 
-  void initialization(int dimensions){
-    for(int i = 0; i < dimensions; i++){
+  void initialization(int dimensions) {
+    for (int i = 0; i < dimensions; i++) {
       Random rd = new Random();
       this.centroid.add(rd.nextDouble());
     }

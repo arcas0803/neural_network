@@ -13,11 +13,5 @@ class Sigmoid extends ActivationFunction {
 
   double getDerivedOutput(double value) => pow(E, (value)) / (pow((pow(E, value) + 1), 2));
 
-  JsonObject toJSON(){
 
-    JsonObject activationFunction = new JsonObject();
-    activationFunction.type = "Sigmoid";
-    return activationFunction;
-
-  }
 }

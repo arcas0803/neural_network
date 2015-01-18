@@ -11,8 +11,6 @@ abstract class StopCondition {
 
   bool isReached();
 
-  // Return the JsonObject of an input function.
-  JsonObject toJSON(){}
 }
 
 

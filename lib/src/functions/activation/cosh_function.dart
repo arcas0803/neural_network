@@ -13,12 +13,4 @@ class Cosh extends ActivationFunction {
 
   double getDerivedOutput(double value) => (pow(E, value) - pow(E, -1 * value)) / 2;
 
-  JsonObject toJSON(){
-
-    JsonObject activationFunction = new JsonObject();
-    activationFunction.type = "Cosh";
-    return activationFunction;
-
-  }
-
 }

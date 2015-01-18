@@ -39,25 +39,6 @@ class Weight {
 
   }
 
-  //
-  // Create a Weight from an JsonObject.
-  //
-  // JSON format:
-  // {
-  //  "value" : 2.1,
-  //  "previousValue" : 2.1,
-  //  "variation" : 0.0
-  //  }
-  //
-
-  Weight.fromJSON(JsonObject json){
-
-    this._value = json.value;
-    this._previousValue = json.previousValue;
-    this._variation = json.variation;
-
-  }
-
   ///
   /// When you set a value, the old value will be previous value and the
   /// variation will be the difference between both (absolute value).
@@ -106,20 +87,6 @@ class Weight {
   void increment(double value) {
 
     this.value = this._value + value;
-
-  }
-
-  //
-  // Return the JsonObject of the weight.
-  //
-
-  JsonObject toJSON(){
-
-    JsonObject weight = new JsonObject();
-    weight.value = this.value;
-    weight.previousValue = this.previousValue;
-    weight.variation = this.variation;
-    return weight;
 
   }
 

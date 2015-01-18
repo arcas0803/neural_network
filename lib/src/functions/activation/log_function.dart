@@ -12,13 +12,6 @@ class Log extends ActivationFunction {
   double getOutput(double value) => log(value);
 
 
-  double getDerivedOutput(double value) => 1/value;
+  double getDerivedOutput(double value) => 1 / value;
 
-  JsonObject toJSON(){
-
-    JsonObject activationFunction = new JsonObject();
-    activationFunction.type = "Log";
-    return activationFunction;
-
-  }
 }

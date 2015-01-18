@@ -24,11 +24,4 @@ class Max extends InputFunction {
 
   }
 
-  JsonObject toJSON(){
-
-    JsonObject inputFunction = new JsonObject();
-    inputFunction.type = "Max";
-    return inputFunction;
-
-  }
 }

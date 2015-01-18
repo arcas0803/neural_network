@@ -4,7 +4,7 @@
 library InputFunction.InputFunction;
 
 import "../../arquitecture/connection.dart";
-import "package:json_object/json_object.dart";
+
 
 /// Interface for implementing input functions.
 
@@ -12,9 +12,6 @@ abstract class InputFunction {
 
   /// From a list of input connections calculates the total input for the neuron.
   double getOutput(List<Connection> inputConnections);
-
-  // Return the JsonObject of an input function.
-  JsonObject toJSON(){}
 
 }
 

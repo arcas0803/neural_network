@@ -15,13 +15,4 @@ class Lineal extends ActivationFunction {
 
   double getDerivedOutput(double value) => value;
 
-  JsonObject toJSON(){
-
-    JsonObject activationFunction = new JsonObject();
-    activationFunction.type = "Lineal";
-    activationFunction.deviation = this.deviation;
-    return activationFunction;
-
-  }
-
 }

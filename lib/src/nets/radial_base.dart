@@ -13,12 +13,12 @@ import '../functions/activation/lineal_function.dart';
 import '../functions/error/mean_square_error.dart';
 import '../functions/stop/max_iterations_function.dart';
 
-class RadialBase extends Network{
-  RadialBase(int numInputNeurons, int numHiddenNeurons, int numOutputNeurons, int maxIterations):super(){
-    this.createNetwork(numInputNeurons, numHiddenNeurons,numOutputNeurons, maxIterations);
+class RadialBase extends Network {
+  RadialBase(int numInputNeurons, int numHiddenNeurons, int numOutputNeurons, int maxIterations):super() {
+    this.createNetwork(numInputNeurons, numHiddenNeurons, numOutputNeurons, maxIterations);
   }
 
-  void createNetwork(int numInputNeurons, int numHiddenNeurons, int numOutputNeurons, int maxIterations){
+  void createNetwork(int numInputNeurons, int numHiddenNeurons, int numOutputNeurons, int maxIterations) {
     Layer inputLayer = new Layer("InputLayer");
     inputLayer.createNeurons(numInputNeurons);
 
@@ -33,9 +33,6 @@ class RadialBase extends Network{
     radial.addLayer(hiddenLayer);
     radial.addLayer(outputLayer);
     radial.connectLayers();
-
-
-
 
 
   }

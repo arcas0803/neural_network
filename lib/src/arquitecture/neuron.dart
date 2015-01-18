@@ -43,108 +43,14 @@ class Neuron {
 
   Neuron(this.id, {InputFunction inputFunction, ActivationFunction activationFunction}) {
 
-    if(inputFunction != null){
+    if (inputFunction != null) {
       this.inputFunction = inputFunction;
     }
-    if(activationFunction != null){
+    if (activationFunction != null) {
       this.activationFunction = activationFunction;
     }
     this.inputConnections = [];
     this.outputConnections = [];
-
-  }
-
-  //
-  // Create a Neuron from an JsonObject.
-  //
-  // JSON format:
-  // {
-  //  "id" : Example,
-  //  "inputConnections" : [JsonObject inputConnection1,JsonObject inputConnection2],
-  //  "outputConnections" : [JsonObject outputConnection1,JsonObject outputConnection2],
-  //  "input" : 0.0,
-  //  "output" : 0.0,
-  //  "error" : 0.0,
-  //  "activationFunction" : JsonObject activationFunction,
-  //  "inputFunction" : JsonObject inputFunction
-  //  }
-  //
-
-  Neuron.fromJSON(JsonObject json){
-
-    this.id = json.id;
-    this.inputConnections = [];
-    for(int i = 0; i < json.inputConnections.length; i++){
-      this.addInputConnection(new Connection.fromJSON(json.inputConnections[i]));
-    }
-    this.outputConnections = [];
-    for(int i = 0; i < json.outputConnections.length; i++){
-      this.addOutputConnection(new Connection.fromJSON(json.outputConnections[i]));
-    }
-    this.input = json.input;
-    this.output = json.output;
-    this.error = json.error;
-
-    switch(json.activationFunction.type){
-      case 'Cosh':
-        this.activationFunction = new Cosh();
-        break;
-      case 'Gaussian':
-        Gaussian temp = new Gaussian();
-        temp.sigma = json.activationFunction.sigma;
-        this.activationFunction = temp;
-        break;
-      case 'Lineal':
-        Lineal temp = new Lineal();
-        temp.deviation = json.activationFunction.deviation;
-        this.activationFunction = temp;
-        break;
-      case 'Log':
-        this.activationFunction = new Log();
-        break;
-      case 'Sigmoid':
-        this.activationFunction = new Sigmoid();
-        break;
-      case 'Sinh':
-        this.activationFunction = new Sinh();
-        break;
-      case 'Step':
-        Step temp = new Step();
-        temp.max = json.activationFunction.maximum;
-        temp.min = json.activationFunction.minimum;
-        this.activationFunction = temp;
-        break;
-      case 'Tanh':
-        this.activationFunction = new Tanh();
-        break;
-      default:
-        this.activationFunction = null;
-    }
-
-    switch(json.inputFuntion.type){
-      case 'Difference':
-        this.inputFunction = new Difference();
-        break;
-      case 'Max':
-        this.inputFunction = new Max();
-        break;
-      case 'Min':
-        this.inputFunction = new Min();
-        break;
-      case 'Radial':
-        Radial temp = new Radial();
-        temp.amplitude = json.inputFuntion.amplitude;
-        this.inputFunction = temp;
-        break;
-      case 'Sum':
-        this.inputFunction = new Sum();
-        break;
-      case 'WeightCombination':
-        this.inputFunction = new WeightCombination();
-        break;
-      default:
-        this.inputFunction = null;
-    }
 
   }
 
@@ -154,10 +60,10 @@ class Neuron {
 
   void calculateOutput() {
 
-    if (this.inputConnections.isNotEmpty && this.activationFunction != null && this.activationFunction!=null) {
+    if (this.inputConnections.isNotEmpty && this.activationFunction != null && this.activationFunction != null) {
       this.input = this.inputFunction.getOutput(this.inputConnections);
       this.output = this.activationFunction.getOutput(this.input);
-    }else{
+    } else {
       this.output = this.input;
     }
 
@@ -167,11 +73,11 @@ class Neuron {
   /// Return true if the neuron is a Threshold.
   ///
 
-  bool get isThreshold{
+  bool get isThreshold {
 
-    if(this.inputConnections.isEmpty && this.activationFunction == null && this.activationFunction == null && this.input == 1 && this.output == 1 && this.outputConnections.length == 1){
+    if (this.inputConnections.isEmpty && this.activationFunction == null && this.activationFunction == null && this.input == 1 && this.output == 1 && this.outputConnections.length == 1) {
       return true;
-    }else{
+    } else {
       return false;
     }
 
@@ -211,8 +117,8 @@ class Neuron {
 
   bool hasConnectionFromNeuron(Neuron neuron) {
 
-    for(Connection connection in this.inputConnections){
-      if(connection.neuronOrigin == neuron){
+    for (Connection connection in this.inputConnections) {
+      if (connection.neuronOrigin == neuron) {
         return true;
       }
     }
@@ -226,8 +132,8 @@ class Neuron {
 
   bool hasConnectionToNeuron(Neuron neuron) {
 
-    for(Connection connection in this.outputConnections){
-      if(connection.neuronDestination == neuron){
+    for (Connection connection in this.outputConnections) {
+      if (connection.neuronDestination == neuron) {
         return true;
       }
     }
@@ -239,10 +145,10 @@ class Neuron {
   /// Return the weights of the input connections.
   ///
 
-  List<Weight> get weights{
+  List<Weight> get weights {
 
     List <Weight> weights = [];
-    for(Connection connection in this.inputConnections){
+    for (Connection connection in this.inputConnections) {
       weights.add(connection.weight);
     }
     return weights;
@@ -253,11 +159,11 @@ class Neuron {
   /// Return the values of the weights of the input connections.
   ///
 
-  List <double> get weightsValues{
+  List <double> get weightsValues {
 
     List <double> temp = [];
-    if(this.hasInputConnection){
-      for(Connection tempConnection in this.inputConnections){
+    if (this.hasInputConnection) {
+      for (Connection tempConnection in this.inputConnections) {
         temp.add(tempConnection.weightValue);
       }
     }
@@ -269,11 +175,11 @@ class Neuron {
   /// Return the previous values of the weights of the input connections.
   ///
 
-  List <double> get weightsPreviousValues{
+  List <double> get weightsPreviousValues {
 
     List <double> temp = [];
-    if(this.hasInputConnection){
-      for(Connection tempConnection in this.inputConnections){
+    if (this.hasInputConnection) {
+      for (Connection tempConnection in this.inputConnections) {
         temp.add(tempConnection.weightPreviousValue);
       }
     }
@@ -285,11 +191,11 @@ class Neuron {
   /// Return the variations of the weights of the input connections.
   ///
 
-  List <double> get weightsVariation{
+  List <double> get weightsVariation {
 
     List <double> temp = [];
-    if(this.hasInputConnection){
-      for(Connection tempConnection in this.inputConnections){
+    if (this.hasInputConnection) {
+      for (Connection tempConnection in this.inputConnections) {
         temp.add(tempConnection.weightVariation);
       }
     }
@@ -328,7 +234,7 @@ class Neuron {
   /// Add a new input connection with the origin neuron.
   ///
 
-  void addInputConnectionFromNeuron(Neuron origin){
+  void addInputConnectionFromNeuron(Neuron origin) {
 
     this.addInputConnection(new Connection(origin, this));
 
@@ -365,7 +271,7 @@ class Neuron {
 
   removeInputConnection(Connection connection) {
 
-    if(connection != null && this.inputConnections.contains(connection)){
+    if (connection != null && this.inputConnections.contains(connection)) {
       Neuron origin = connection.neuronOrigin;
       origin.outputConnections.remove(connection);
       this.inputConnections.remove(connection);
@@ -380,7 +286,7 @@ class Neuron {
 
 
   void removeOutputConnection(Connection connection) {
-    if(connection != null && this.outputConnections.contains(connection)){
+    if (connection != null && this.outputConnections.contains(connection)) {
       Neuron destination = connection.neuronDestination;
       destination.inputConnections.remove(connection);
       this.outputConnections.remove(connection);
@@ -393,7 +299,7 @@ class Neuron {
 
   void removeInputConnectionFromNeuron(Neuron origin) {
     Connection connection = this.inputConnectionFromNeuron(origin);
-    if(connection != null){
+    if (connection != null) {
       origin.removeOutputConnection(connection);
       this.removeInputConnection(connection);
     }
@@ -405,7 +311,7 @@ class Neuron {
 
   void removeOutputConnectionToNeuron(Neuron destination) {
     Connection connection = this.outputConnectionToNeuron(destination);
-    if(connection != null){
+    if (connection != null) {
       destination.removeInputConnection(connection);
       this.removeOutputConnection(connection);
     }
@@ -419,7 +325,7 @@ class Neuron {
   void removeAllInputConnections() {
     List <Connection> tempInputConnections = [];
     tempInputConnections.addAll(this.inputConnections);
-    for(Connection connection in tempInputConnections){
+    for (Connection connection in tempInputConnections) {
       this.removeInputConnection(connection);
     }
   }
@@ -432,7 +338,7 @@ class Neuron {
   void removeAllOutputConnections() {
     List <Connection> tempOutputConnections = [];
     tempOutputConnections.addAll(this.inputConnections);
-    for(Connection connection in tempOutputConnections){
+    for (Connection connection in tempOutputConnections) {
       this.removeOutputConnection(connection);
     }
   }
@@ -452,7 +358,7 @@ class Neuron {
 
   Connection inputConnectionFromNeuron(Neuron neuron) {
     for (var connection in this.inputConnections) {
-      if (connection.neuronOrigin == neuron){
+      if (connection.neuronOrigin == neuron) {
         return connection;
       }
     }
@@ -465,44 +371,10 @@ class Neuron {
 
   Connection outputConnectionToNeuron(Neuron neuron) {
     for (var connection in this.outputConnections) {
-      if (connection.neuronDestination == neuron){
+      if (connection.neuronDestination == neuron) {
         return connection;
       }
     }
     return null;
   }
-
-  //
-  // Return the JsonObject of the neuron.
-  //
-
-  JsonObject toJSON(){
-
-    JsonObject neuron = new JsonObject();
-    neuron.id = this.id;
-    neuron.inputConnections = new List();
-    for(Connection connection in this.inputConnections){
-      neuron.inputConnection.add(connection.toJSON());
-    }
-    neuron.outputConnections = new List();
-    for(Connection connection in this.outputConnections){
-      neuron.outputConnection.add(connection.toJSON());
-    }
-    neuron.input = this.input;
-    neuron.output = this.output;
-    neuron.error = this.error;
-    if(this.activationFunction == null){
-      neuron.activationFunction = null;
-    }else{
-      neuron.activationFunction = this.activationFunction.toJSON();
-    }
-    if(this.inputFunction == null){
-      neuron.inputFunction = null;
-    }else{
-      neuron.inputFunction = this.inputFunction.toJSON();
-    }
-    return neuron;
-
-  }
-
 }

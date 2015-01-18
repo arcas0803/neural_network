@@ -18,17 +18,11 @@ class Difference extends InputFunction {
 
     double output = 0.0;
     for (Connection temp in inputConnections) {
-      output += pow(temp.inputNeuronDestination - temp.weightValue,2);
+      output += pow(temp.inputNeuronDestination - temp.weightValue, 2);
     }
     return sqrt(output);
 
   }
 
-  JsonObject toJSON(){
 
-    JsonObject inputFunction = new JsonObject();
-    inputFunction.type = "Difference";
-    return inputFunction;
-
-  }
 }

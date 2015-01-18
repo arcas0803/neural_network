@@ -11,14 +11,6 @@ class Tanh extends ActivationFunction {
 
   double getOutput(double value) => ((pow(E, value) - pow(E, -1 * value)) / (pow(E, value) + pow(E, -1 * value)));
 
-  double getDerivedOutput(double value) => (2/(pow(E, value) + pow(E, -1 * value)));
-
-  JsonObject toJSON(){
-
-    JsonObject activationFunction = new JsonObject();
-    activationFunction.type = "Tanh";
-    return activationFunction;
-
-  }
+  double getDerivedOutput(double value) => (2 / (pow(E, value) + pow(E, -1 * value)));
 
 }

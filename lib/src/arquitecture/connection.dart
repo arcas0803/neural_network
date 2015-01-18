@@ -27,34 +27,17 @@ class Connection {
   ///
 
   Connection(Neuron origin, Neuron destination, [double value]) {
-    if(origin != null && destination != null){
-      if(value != null){
+    if (origin != null && destination != null) {
+      if (value != null) {
         this.weight = new Weight(value);
-      }else{
+      } else {
         this.weight = new Weight();
       }
       this.neuronOrigin = origin;
       this.neuronDestination = destination;
-    }else{
+    } else {
       throw ("Neuron origin and neuron destination can't be null");
     }
-  }
-
-  //
-  // Create a Neuron from an JsonObject.
-  //
-  // JSON format:
-  // {
-  //  "neuronOrigin" : JsonObject neuronOrigin,
-  //  "neuronDestination" : JsonObject neuronDestination,
-  //  "weight" : JsonObject weight
-  //  }
-  //
-
-  Connection.fromJSON(JsonObject json){
-    this.neuronOrigin = new Neuron.fromJSON(json.neuronOrigin);
-    this.neuronDestination = new Neuron.fromJSON(json.neuronDestination);
-    this.weight = new Weight.fromJSON(json.weight);
   }
 
   ///
@@ -70,7 +53,9 @@ class Connection {
 
   double get weightValue => this.weight.value;
 
-  void set weightValue(double value) {this.weight.value = value;}
+  void set weightValue(double value) {
+    this.weight.value = value;
+  }
 
   ///
   /// Get the previous value of the weight associated.
@@ -93,22 +78,8 @@ class Connection {
   ///                             this.variation = 1.0;
   ///
 
-  void increment(double value){
+  void increment(double value) {
     this.weight.increment(value);
-  }
-
-  //
-  // Return the JsonObject of the connection.
-  //
-
-  JsonObject toJSON(){
-
-    JsonObject connection = new JsonObject();
-    connection.neuronOrigin = this.neuronOrigin.toJSON();
-    connection.neuronDestination = this.neuronDestination.toJSON();
-    connection.weight = this.weight.toJSON();
-    return connection;
-
   }
 
 }

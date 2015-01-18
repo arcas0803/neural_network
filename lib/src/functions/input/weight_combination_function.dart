@@ -24,11 +24,4 @@ class WeightCombination extends InputFunction {
 
   }
 
-  JsonObject toJSON(){
-
-    JsonObject inputFunction = new JsonObject();
-    inputFunction.type = "WeightCombination";
-    return inputFunction;
-
-  }
 }

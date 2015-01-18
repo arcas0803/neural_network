@@ -24,31 +24,11 @@ class Layer {
   ///
 
   Layer(this.id, {List<Neuron>neurons}) {
-    if(neurons!=null){
+    if (neurons != null) {
       this.neurons = neurons;
-    }else {
-       this.neurons = [];
+    } else {
+      this.neurons = [];
     }
-  }
-
-  //
-  // Create a Layer from an JsonObject.
-  //
-  // JSON format:
-  // {
-  //  "id" : Example,
-  //  "neurons" : [JsonObject neuron1,JsonObject neuron2],
-  //  }
-  //
-
-  Layer.fromJSON(JsonObject json){
-
-    this.id = json.id;
-    this.neurons = [];
-    for(int i = 0; i < json.neurons.length; i++){
-      this.addNeuron(new Neuron.fromJSON(json.neurons[i]));
-    }
-
   }
 
   ///
@@ -58,10 +38,10 @@ class Layer {
   ///   layer.createNeurons(5,InputFunction: some_input_function, ActivationFunction: some_activation_function);
   ///   Add 5 new neurons with some_input_function and some_activation_function.
 
-  void createNeurons(int count, {InputFunction inputFunction, ActivationFunction activationFunction}){
+  void createNeurons(int count, {InputFunction inputFunction, ActivationFunction activationFunction}) {
     this.neurons = [];
-    for(int i = 0; i < count; i++){
-      Neuron temp = new Neuron("Neuron_"+i.toString(),inputFunction: inputFunction, activationFunction:activationFunction);
+    for (int i = 0; i < count; i++) {
+      Neuron temp = new Neuron("Neuron_" + i.toString(), inputFunction: inputFunction, activationFunction:activationFunction);
       this.neurons.add(temp);
     }
   }
@@ -78,10 +58,10 @@ class Layer {
   /// Returns the number of neurons of the layer.
   ///
 
-  int get numNeurons{
-    if(this.hasNeurons){
+  int get numNeurons {
+    if (this.hasNeurons) {
       return this.neurons.length;
-    }else{
+    } else {
       return 0;
     }
   }
@@ -148,19 +128,4 @@ class Layer {
 
   }
 
-  //
-  // Return the JsonObject of the layer.
-  //
-
-  JsonObject toJSON(){
-
-    JsonObject layer = new JsonObject();
-    layer.id = this.id;
-    layer.neurons = new List();
-    for (Neuron neuron in this.neurons){
-      layer.neurons.add(neuron.toJSON());
-    }
-    return layer;
-
-  }
 }

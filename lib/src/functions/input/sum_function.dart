@@ -23,11 +23,4 @@ class Sum extends InputFunction {
 
   }
 
-  JsonObject toJSON(){
-
-    JsonObject inputFunction = new JsonObject();
-    inputFunction.type = "Sum";
-    return inputFunction;
-
-  }
 }

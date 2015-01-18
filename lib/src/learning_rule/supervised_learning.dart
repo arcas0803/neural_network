@@ -10,7 +10,7 @@ import "../dataset/instance.dart";
 
 /// Learning rule for supervised dataSet.
 
-abstract class SupervisedLearningRule extends LearningRule{
+abstract class SupervisedLearningRule extends LearningRule {
 
   ErrorFunction _errorFunction;
   List <double> errorIterations;
@@ -21,7 +21,7 @@ abstract class SupervisedLearningRule extends LearningRule{
   /// The learning rule must have max iteration stop condition but its possible to add more.
   ///
 
-  SupervisedLearningRule(int maxIterations):super(){
+  SupervisedLearningRule(int maxIterations):super() {
     MaxIteration stopCondition = new MaxIteration(maxIterations, this);
     this.addStopCondition(stopCondition);
     this.errorIterations = [];
@@ -29,8 +29,8 @@ abstract class SupervisedLearningRule extends LearningRule{
 
   /// The error function indicates how to calculate the network error.
 
-  set errorFunction (ErrorFunction errorFunction){
-    if(errorFunction != null){
+  set errorFunction(ErrorFunction errorFunction) {
+    if (errorFunction != null) {
       this._errorFunction = errorFunction;
     }
   }
@@ -45,21 +45,21 @@ abstract class SupervisedLearningRule extends LearningRule{
   ///   2. If all stop conditions are reached stop, if not return to 1.
   ///
 
-  void learn(List <Instance> trainSet){
+  void learn(List <Instance> trainSet) {
 
-    for(Instance instance in trainSet){
-      if(!instance.isSupervised){
+    for (Instance instance in trainSet) {
+      if (!instance.isSupervised) {
         throw ("All instance must be supervised");
       }
     }
 
-    while(!hasReachStopCondition()){
+    while (!hasReachStopCondition()) {
       this.learnIteration(trainSet);
     }
   }
 
-  void learnIteration(List<Instance>trainSet){
-    for(Instance trainInstance in trainSet){
+  void learnIteration(List<Instance>trainSet) {
+    for (Instance trainInstance in trainSet) {
       this.learnPattern(trainInstance.attributes, trainInstance.classValues);
     }
     this.currentIteration++;
@@ -67,7 +67,7 @@ abstract class SupervisedLearningRule extends LearningRule{
     this.errorFunction.reset();
   }
 
-  void learnPattern(List<double>values, List<double>classValues){
+  void learnPattern(List<double>values, List<double>classValues) {
     this.network.inputNetwork = values;
     this.network.calculateOutput();
     List <double> outputNetwork = this.network.outputNetwork;
@@ -77,9 +77,9 @@ abstract class SupervisedLearningRule extends LearningRule{
 
   }
 
-  List <double> calculateOutputError(List<double>output, List<double>desireOutput){
+  List <double> calculateOutputError(List<double>output, List<double>desireOutput) {
     List outputFinal = [];
-    for (int i = 0; i < desireOutput.length; i++){
+    for (int i = 0; i < desireOutput.length; i++) {
       outputFinal.add(desireOutput[i] - output[i]);
     }
     return outputFinal;

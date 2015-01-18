@@ -11,9 +11,6 @@ import "../dataset/dataset_export.dart";
 
 abstract class Filter {
 
-  /// Name of the filter.
-  String name;
-
   /// Apply method will return the new list of instances.
   List<Instance> applyFilter(DataSet dataSet);
 

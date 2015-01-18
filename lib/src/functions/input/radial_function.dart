@@ -22,18 +22,10 @@ class Radial extends InputFunction {
 
     double output = 0.0;
     for (Connection temp in inputConnections) {
-      output += pow(temp.inputNeuronDestination - temp.weightValue,2);
+      output += pow(temp.inputNeuronDestination - temp.weightValue, 2);
     }
-    return sqrt(output)/amplitude;
+    return sqrt(output) / amplitude;
 
   }
 
-  JsonObject toJSON(){
-
-    JsonObject inputFunction = new JsonObject();
-    inputFunction.type = "Radial";
-    inputFunction.amplitude = this.amplitude;
-    return inputFunction;
-
-  }
 }
