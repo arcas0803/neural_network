@@ -4,7 +4,6 @@
 library ErrorFunction.MeanSquareError;
 
 import 'error_function.dart';
-import "package:json_object/json_object.dart";
 
 class MeanSquareError implements ErrorFunction {
 

@@ -1,8 +1,8 @@
 library LearningRule.UnSupervised;
 
 import 'learning_rule.dart';
-import '../Functions/Stop/max_iterations_function.dart';
-import "../DataSet/instance.dart";
+import '../functions/stop/max_iterations_function.dart';
+import "../dataset/instance.dart";
 
 
 abstract class NoSupervisedLearningRule extends LearningRule {
@@ -13,11 +13,6 @@ abstract class NoSupervisedLearningRule extends LearningRule {
   }
 
   void learn(List<Instance>trainSet) {
-    for (Instance instance in trainSet) {
-      if (instance.isSupervised) {
-        throw ("All instance must be unsupervised");
-      }
-    }
     while (!hasReachStopCondition()) {
       this.learnIteration(trainSet);
     }
@@ -25,7 +20,7 @@ abstract class NoSupervisedLearningRule extends LearningRule {
 
   void learnIteration(List<Instance>trainSet) {
     for (Instance trainInstance in trainSet) {
-      this.learnPattern(trainInstance.values);
+      this.learnPattern(trainInstance.);
       this.currentIteration++;
     }
   }

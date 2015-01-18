@@ -6,7 +6,7 @@ library LearningRule.Supervised;
 import 'learning_rule.dart';
 import '../functions/stop/max_iterations_function.dart';
 import '../functions/error/error_function.dart';
-import "../dataset/instance.dart";
+import "../dataset/dataset_export.dart";
 
 /// Learning rule for supervised dataSet.
 
@@ -45,22 +45,15 @@ abstract class SupervisedLearningRule extends LearningRule {
   ///   2. If all stop conditions are reached stop, if not return to 1.
   ///
 
-  void learn(List <Instance> trainSet) {
-
-    for (Instance instance in trainSet) {
-      if (!instance.isSupervised) {
-        throw ("All instance must be supervised");
-      }
-    }
-
+  void learn(DataSet dataSet) {
     while (!hasReachStopCondition()) {
-      this.learnIteration(trainSet);
+      this.learnIteration(dataSet);
     }
   }
 
-  void learnIteration(List<Instance>trainSet) {
-    for (Instance trainInstance in trainSet) {
-      this.learnPattern(trainInstance.attributes, trainInstance.classValues);
+  void learnIteration(DataSet dataSet) {
+    for (int i = 0; i < dataSet.trainSet.length; i++) {
+      this.learnPattern(dataSet.attributes, trainInstance.classValues);
     }
     this.currentIteration++;
     this.errorIterations.add(this.errorFunction.totalError());

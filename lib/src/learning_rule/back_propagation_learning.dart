@@ -1,9 +1,7 @@
 library LearningRule.BackPropagation;
 
 import "basic_learning.dart";
-import "../Arquitecture/connection.dart";
-import "../Arquitecture/neuron.dart";
-import "../Arquitecture/layer.dart";
+import '../arquitecture/arquitecture_export.dart';
 
 
 class BackPropagationLearningRule extends BasicLearningRule {

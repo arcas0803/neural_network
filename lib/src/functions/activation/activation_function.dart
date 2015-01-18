@@ -1,4 +1,4 @@
-library ActivationFunction;
+library ActivationFunction.ActivationFunction;
 
 abstract class ActivationFunction {
   double getOutput(double value);

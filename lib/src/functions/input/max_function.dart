@@ -6,9 +6,8 @@ library InputFunction.Max;
 import 'dart:math';
 import 'input_function.dart';
 import "../../arquitecture/connection.dart";
-import "package:json_object/json_object.dart";
 
-class Max extends InputFunction {
+class Max implements InputFunction {
 
   ///
   /// Choose the highest value product for every weight their respective input.

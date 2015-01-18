@@ -2,7 +2,7 @@ library ActivationFunction.StepFunction;
 
 import 'activation_function.dart';
 
-class Step extends ActivationFunction {
+class Step implements ActivationFunction {
 
   double max = 1.0;
   double min = -1.0;

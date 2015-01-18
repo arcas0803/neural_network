@@ -4,8 +4,7 @@
 library LearningRule.Basic;
 
 import "supervised_learning.dart";
-import "../arquitecture/neuron.dart";
-import "../arquitecture/connection.dart";
+import '../arquitecture/arquitecture_export.dart';
 
 /// Basic learning rule that most of the network use.
 

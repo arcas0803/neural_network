@@ -1,3 +1,6 @@
+// Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
+// is governed by a BSD-style license that can be found in the LICENSE file.
+
 library DataSet;
 
 import 'dart:math';
@@ -62,7 +65,7 @@ class DataSet {
     this._isSupervised = json.isSupervised;
     this._instances = [];
     for(int i = 0; i < json.instances.length; i++){
-      this.addInstance(json.instances[i]);
+      this._instances.add(new Instance.fromJSON(json.instances[i]));
     }
   }
 
@@ -311,6 +314,8 @@ class DataSet {
 
   void setColumn(int index, List <double> values) {
     int i = 0;
+    if(values.length != this.instances.length)
+      throw("The number of values of the new column must be same as the number of instances");
     for(Instance instance in this.instances){
       instance.elements[index] = values [i];
       i++;
@@ -371,6 +376,7 @@ class DataSet {
     for(Instance instance in this.instances){
       dataSet.instances.add(instance.toJSON());
     }
+    return dataSet;
   }
 
 }

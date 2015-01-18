@@ -3,8 +3,6 @@
 
 library ErrorFunction.ErrorFunction;
 
-import "package:json_object/json_object.dart";
-
 //Interface for implementing error functions.
 
 abstract class ErrorFunction {

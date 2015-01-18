@@ -5,10 +5,8 @@ library InputFunction.WeightCombination;
 
 import 'input_function.dart';
 import "../../arquitecture/connection.dart";
-import "package:json_object/json_object.dart";
 
-
-class WeightCombination extends InputFunction {
+class WeightCombination implements InputFunction {
 
   ///
   /// Linear combination of weights and inputs.

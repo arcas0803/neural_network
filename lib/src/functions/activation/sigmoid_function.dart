@@ -5,9 +5,9 @@ library ActivationFunction.SigmoidFunction;
 
 import 'activation_function.dart';
 import 'dart:math';
-import "package:json_object/json_object.dart";
 
-class Sigmoid extends ActivationFunction {
+
+class Sigmoid implements ActivationFunction {
 
   double getOutput(double value) => (1 / (1 + pow(E, (-1 * value))));
 

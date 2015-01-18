@@ -6,9 +6,8 @@ library InputFunction.Radial;
 import 'dart:math';
 import 'input_function.dart';
 import "../../arquitecture/connection.dart";
-import "package:json_object/json_object.dart";
 
-class Radial extends InputFunction {
+class Radial implements InputFunction {
 
   /// Amplitude serves for the hidden neuron is activated in a region of the input space trying not to overlap
   /// the area of activation of other neurons.

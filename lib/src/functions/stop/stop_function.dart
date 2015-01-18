@@ -3,8 +3,6 @@
 
 library StopCondition.StopCondition;
 
-import "package:json_object/json_object.dart";
-
 /// Interface for implementing new stop conditions.
 
 abstract class StopCondition {

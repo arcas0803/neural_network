@@ -5,7 +5,7 @@ library LearningRule;
 
 import "../arquitecture/network.dart";
 import '../functions/stop/stop_function.dart';
-import "../dataSet/instance.dart";
+import "../dataSet/dataset_export.dart";
 
 // Indicates how the network should modify the weights for learning.
 
@@ -72,5 +72,5 @@ abstract class LearningRule {
     return true;
   }
 
-  void learn(List<Instance> trainSet);
+  void learn(DataSet dataSet);
 }

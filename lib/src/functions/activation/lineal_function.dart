@@ -4,9 +4,8 @@
 library ActivationFunction.LinealFunction;
 
 import 'activation_function.dart';
-import "package:json_object/json_object.dart";
 
-class Lineal extends ActivationFunction {
+class Lineal implements ActivationFunction {
 
   double deviation = 1.0;
 

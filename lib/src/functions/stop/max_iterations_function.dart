@@ -1,7 +1,7 @@
 library StopCondition.MaxIterations;
 
 import 'stop_function.dart';
-import '../../LearningRule/learning_rule.dart';
+import '../../learning_rule/learning_rule.dart';
 
 class MaxIteration implements StopCondition {
 

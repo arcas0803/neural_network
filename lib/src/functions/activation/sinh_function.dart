@@ -5,9 +5,9 @@ library ActivationFunction.SinHFunction;
 
 import 'activation_function.dart';
 import 'dart:math';
-import "package:json_object/json_object.dart";
 
-class Sinh extends ActivationFunction {
+
+class Sinh implements ActivationFunction {
 
   double getOutput(double value) => (pow(E, value) - pow(E, -1 * value)) / 2;
 

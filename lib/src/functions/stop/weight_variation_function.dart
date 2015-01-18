@@ -1,10 +1,10 @@
 // Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
+
 library StopCondition.WeightChange;
 
 import 'stop_function.dart';
 import '../../learning_rule/learning_rule.dart';
-import "package:json_object/json_object.dart";
 
 /// Sets a threshold value and if the variation of all weights in the network are lower than the threshold training stops.
 

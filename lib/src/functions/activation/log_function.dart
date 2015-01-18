@@ -5,9 +5,9 @@ library ActivationFunction.LogFunction;
 
 import 'activation_function.dart';
 import 'dart:math';
-import "package:json_object/json_object.dart";
 
-class Log extends ActivationFunction {
+
+class Log implements ActivationFunction {
 
   double getOutput(double value) => log(value);
 

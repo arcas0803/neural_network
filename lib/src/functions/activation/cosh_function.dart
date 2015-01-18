@@ -4,10 +4,9 @@
 library ActivationFunction.CosHFunction;
 
 import 'activation_function.dart';
-import "package:json_object/json_object.dart";
 import 'dart:math';
 
-class Cosh extends ActivationFunction {
+class Cosh implements ActivationFunction {
 
   double getOutput(double value) => (pow(E, value) + pow(E, -1 * value)) / 2;
 

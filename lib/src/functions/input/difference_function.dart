@@ -6,9 +6,8 @@ library InputFunction.Difference;
 import 'dart:math';
 import 'input_function.dart';
 import "../../arquitecture/connection.dart";
-import "package:json_object/json_object.dart";
 
-class Difference extends InputFunction {
+class Difference implements InputFunction {
 
   ///
   /// Calculate the Euclidean distance between the vector of weights and inputs the previous layer.

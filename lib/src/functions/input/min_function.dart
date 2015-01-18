@@ -6,9 +6,8 @@ library InputFunction.Min;
 import 'dart:math';
 import 'input_function.dart';
 import "../../arquitecture/connection.dart";
-import "package:json_object/json_object.dart";
 
-class Min extends InputFunction {
+class Min implements InputFunction {
 
   ///
   /// Choose the minimum value product for every weight their respective input.

@@ -2,11 +2,10 @@ library LearningRule.Radial;
 
 import "basic_learning.dart";
 import 'dart:math';
-import '../DataSet/instance.dart';
-import "../Arquitecture/neuron.dart";
-import "../Arquitecture/connection.dart";
-import '../Algorithms/Kmeans/k_means.dart';
-import '../Algorithms/Kmeans/cluster.dart';
+import '../dataset/instance.dart';
+import '../arquitecture/arquitecture_export.dart';
+import '../algorithms/k_means/k_means.dart';
+import '../algorithms/k_means/cluster.dart';
 
 class RadialLearning extends BasicLearningRule {
 

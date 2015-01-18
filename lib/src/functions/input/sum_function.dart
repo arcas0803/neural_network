@@ -5,9 +5,8 @@ library InputFunction.Sum;
 
 import 'input_function.dart';
 import "../../arquitecture/connection.dart";
-import "package:json_object/json_object.dart";
 
-class Sum extends InputFunction {
+class Sum implements InputFunction {
 
   ///
   /// Sum all entries.
