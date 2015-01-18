@@ -2,7 +2,7 @@ library LearningRule.UnSupervised;
 
 import 'learning_rule.dart';
 import '../functions/stop/max_iterations_function.dart';
-import "../dataset/instance.dart";
+import "../dataset/dataset_export.dart";
 
 
 abstract class NoSupervisedLearningRule extends LearningRule {
@@ -12,18 +12,20 @@ abstract class NoSupervisedLearningRule extends LearningRule {
     this.addStopCondition(stopCondition);
   }
 
-  void learn(List<Instance>trainSet) {
+  void learn(DataSet dataSet) {
     while (!hasReachStopCondition()) {
-      this.learnIteration(trainSet);
+      this.learnIteration(dataSet);
     }
   }
 
-  void learnIteration(List<Instance>trainSet) {
-    for (Instance trainInstance in trainSet) {
-      this.learnPattern(trainInstance.);
-      this.currentIteration++;
+  void learnIteration(DataSet dataSet) {
+    for (int i = 0; i < dataSet.instances.length; i++) {
+      if(dataSet.instances[i].isForTrain)
+        this.learnPattern(dataSet.instanceValues(i));
     }
+    this.currentIteration++;
   }
+
 
   void learnPattern(List<double>values) {
     this.network.inputNetwork = values;

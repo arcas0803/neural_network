@@ -52,8 +52,9 @@ abstract class SupervisedLearningRule extends LearningRule {
   }
 
   void learnIteration(DataSet dataSet) {
-    for (int i = 0; i < dataSet.trainSet.length; i++) {
-      this.learnPattern(dataSet.attributes, trainInstance.classValues);
+    for (int i = 0; i < dataSet.instances.length; i++) {
+      if(dataSet.instances[i].isForTrain)
+        this.learnPattern(dataSet.instanceValues(i), dataSet.instanceClassValues(i));
     }
     this.currentIteration++;
     this.errorIterations.add(this.errorFunction.totalError());

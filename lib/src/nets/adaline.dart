@@ -3,9 +3,7 @@
 
 library Adaline;
 
-import '../arquitecture/network.dart';
-import '../arquitecture/layer.dart';
-import '../arquitecture/neuron.dart';
+import '../arquitecture/arquitecture_export.dart';
 import '../functions/input/weight_combination_function.dart';
 import '../functions/activation/lineal_function.dart';
 import '../functions/error/mean_square_error.dart';

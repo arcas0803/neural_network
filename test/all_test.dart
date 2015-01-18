@@ -85,7 +85,7 @@ main() {
   });
 
   group('Filter test', () {
-    test('Random', () {
+    test('[Random]', () {
       List <List <double>> values = [[2.1, 4.1, 2.3], [2.3, 4.3, 2.5], [2.2, 4.2, 2.4]];
       List <String> labels = ["At1", "At2", "At3"];
 
@@ -99,7 +99,7 @@ main() {
 
       expect(dataSetTest.instances.length == 3, true);
     });
-    test('Normalize', () {
+    test('[Normalize]', () {
       List <List <double>> values = [[2.1, 4.1, 2.3], [2.3, 4.3, 2.5], [2.2, 4.2, 2.4]];
       List <String> labels = ["At1", "At2", "At3"];
 
@@ -120,7 +120,7 @@ main() {
 
   group('Arquitecture test', () {
 
-    test('[Weight test]', () {
+    test('[Weight]', () {
       Weight weightTest = new Weight();
 
       expect(weightTest.variation == null, true);
@@ -139,7 +139,7 @@ main() {
 
     });
 
-    test('[Connection test]', () {
+    test('[Connection]', () {
       Connection connectionTest = new Connection(new Neuron("origin"), new Neuron("destiny"));
 
       expect(connectionTest.neuronOrigin.id == "origin", true);
@@ -163,7 +163,7 @@ main() {
 
     });
 
-    test('[Neuron test]', () {
+    test('[Neuron]', () {
       Neuron neuronTest = new Neuron("NeuronTest");
 
       expect(neuronTest.activationFunction == null, true);
@@ -215,7 +215,7 @@ main() {
 
     });
 
-    test('Layer test', () {
+    test('[Layer]', () {
       Layer layerTest = new Layer("LayerTest");
 
       expect(layerTest.hasNeurons, false);
@@ -246,7 +246,7 @@ main() {
 
     });
 
-    test('Network test', () {
+    test('[Network]', () {
 
       Layer layerTest0 = new Layer("inputLayer");
       Layer layerTest1 = new Layer("inputLayer1");
@@ -315,42 +315,42 @@ main() {
 
 
   group('activation function test', () {
-    test('CosH test', () {
+    test('[CosH]', () {
       Cosh test = new Cosh();
       expect(test.getOutput(1.1) == 1.6685185538222564, true);
       expect(test.getDerivedOutput(1.1) == 1.335647470124177, true);
     });
-    test('Gaussian test', () {
+    test('[Gaussian]', () {
       Gaussian test = new Gaussian();
       expect(test.getOutput(1.1) == 0.0889216174593863, true);
       expect(test.getDerivedOutput(1.1) == -0.39125511682129976, true);
     });
-    test('Lineal test', () {
+    test('[Lineal]', () {
       Lineal test = new Lineal();
       expect(test.getOutput(1.1) == 1.1, true);
       expect(test.getDerivedOutput(1.1) == 1.1, true);
     });
-    test('Log test', () {
+    test('[Log]', () {
       Log test = new Log();
       expect(test.getOutput(1.1) == 0.09531017980432493, true);
       expect(test.getDerivedOutput(1.1) == 0.9090909090909091, true);
     });
-    test('Sigmoid test', () {
+    test('[Sigmoid]', () {
       Sigmoid test = new Sigmoid();
       expect(test.getOutput(1.1) == 0.7502601055951177, true);
       expect(test.getDerivedOutput(1.1) == 0.18736987954752055, true);
     });
-    test('SinH test', () {
+    test('[SinH]', () {
       Sinh test = new Sinh();
       expect(test.getOutput(1.1) == 1.335647470124177, true);
       expect(test.getDerivedOutput(1.1) == 1.6685185538222564, true);
     });
-    test('Step test', () {
+    test('[Step]', () {
       Step test = new Step();
       expect(test.getOutput(1.1) == 1.0, true);
       expect(test.getDerivedOutput(1.1) == null, true);
     });
-    test('TanH test', () {
+    test('[TanH]', () {
       Tanh test = new Tanh();
       expect(test.getOutput(1.1) == 0.8004990217606297, true);
       expect(test.getDerivedOutput(1.1) == 0.5993340605707929, true);
@@ -358,7 +358,7 @@ main() {
   });
 
   group('Error function test', () {
-    test('Mean Square Error test', () {
+    test('[Mean Square Error]', () {
       MeanSquareError errorTest = new MeanSquareError();
       errorTest.addError([2.3, 2.4, 2.5]);
       expect(errorTest.error == 8.649999999999999, true);
@@ -374,7 +374,7 @@ main() {
   });
 
   group('input function test', () {
-    test('Difference test', () {
+    test('[Difference]', () {
       Difference inputTest = new Difference();
       List<Connection> inputConnections = [];
       for (int i = 0; i < 8; i++) {
@@ -385,7 +385,7 @@ main() {
       expect(inputTest.getOutput(inputConnections) == 56.991227395100026, true);
     });
 
-    test('Max test', () {
+    test('[Max]', () {
       Max inputTest = new Max();
       List<Connection> inputConnections = [];
       for (int i = 0; i < 8; i++) {
@@ -396,7 +396,7 @@ main() {
       expect(inputTest.getOutput(inputConnections) == 343.0, true);
     });
 
-    test('Min test', () {
+    test('[Min]', () {
       Min inputTest = new Min();
       List<Connection> inputConnections = [];
       for (int i = 0; i < 8; i++) {
@@ -407,7 +407,7 @@ main() {
       expect(inputTest.getOutput(inputConnections) == 0.0, true);
     });
 
-    test('Radial test', () {
+    test('[Radial]', () {
       Radial inputTest = new Radial();
       List<Connection> inputConnections = [];
       for (int i = 0; i < 8; i++) {
@@ -418,7 +418,7 @@ main() {
       expect(inputTest.getOutput(inputConnections) == 56.991227395100026, true);
     });
 
-    test('Sum test', () {
+    test('[Sum]', () {
       Sum inputTest = new Sum();
       List<Connection> inputConnections = [];
       for (int i = 0; i < 8; i++) {
@@ -429,7 +429,7 @@ main() {
       expect(inputTest.getOutput(inputConnections) == 140.0, true);
     });
 
-    test('Weight combination test', () {
+    test('[Weight combination]', () {
       WeightCombination inputTest = new WeightCombination();
       List<Connection> inputConnections = [];
       for (int i = 0; i < 8; i++) {
@@ -442,7 +442,7 @@ main() {
   });
 
   group('Net test', () {
-    test('Adaline', () {
+    test('[Adaline]', () {
       DataSet dataSetTest = new DataSet("TEST", 2, numClassValues:1);
       dataSetTest.labels = ["At1", "At2", "At3"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3], [2.3, 4.3, 2.5], [2.2, 4.2, 2.4]]);
@@ -454,11 +454,11 @@ main() {
       expect(adaline.inputNeurons.length == 2, true);
       expect(adaline.outputNeurons.length == 1, true);
 
-      adaline.learningRule.learn(dataSetTest.trainSet);
+      adaline.learningRule.learn(dataSetTest);
 
     });
 
-    test('Perceptron', () {
+    test('[Perceptron]', () {
       DataSet dataSetTest = new DataSet("TEST", 2, numClassValues:1);
       dataSetTest.labels = ["At1", "At2", "At3"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3], [2.3, 4.3, 2.5], [2.2, 4.2, 2.4]]);
@@ -470,10 +470,10 @@ main() {
       expect(perceptron.inputNeurons.length == 2, true);
       expect(perceptron.outputNeurons.length == 1, true);
 
-      perceptron.learningRule.learn(dataSetTest.trainSet);
+      perceptron.learningRule.learn(dataSetTest);
     });
 
-    test('Multilayer perceptron', () {
+    test('[Multilayer perceptron]', () {
       DataSet dataSetTest = new DataSet("TEST", 2, numClassValues:2);
       dataSetTest.labels = ["At1", "At2", "At3", "At4"];
       dataSetTest.addInstances([[2.1, 4.1, 2.3, 1.2], [2.3, 4.3, 2.5, 1.3], [2.2, 4.2, 2.4, 1.5]]);
@@ -484,11 +484,11 @@ main() {
       expect(multiLayerPerceptron.inputNeurons.length == 2, true);
       expect(multiLayerPerceptron.outputNeurons.length == 2, true);
 
-      multiLayerPerceptron.learningRule.learn(dataSetTest.trainSet);
+      multiLayerPerceptron.learningRule.learn(dataSetTest);
 
     });
 
-    test('Radial base', () {
+    test('[Radial base]', () {
 
 
     });
