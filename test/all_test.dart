@@ -507,7 +507,7 @@ main() {
       dataSetTest.addInstances(instances);
       dataSetTest.trainTestSet = 1000;
 
-      multiLayerPerceptron = new MultilayerPerceptron([8,3,1],40000);
+      multiLayerPerceptron = new MultilayerPerceptron([8,3,1],4000);
       multiLayerPerceptron.learningRule.learningRate = 0.3;
       multiLayerPerceptron.learningRule.learn(dataSetTest);
 

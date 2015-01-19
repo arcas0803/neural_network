@@ -13,6 +13,9 @@ class NormalizationFilter implements Filter {
   NormalizationFilter() {}
 
   List<Instance> applyFilter(DataSet input) {
+    if(input.instances.isEmpty)
+      throw("DataSet has no instances");
+
     for (int i = 0; i < input.numValues + input.numClassValues; i++) {
         input.setColumn(i, normalizationColumn(input.getColumn(i)));
     }

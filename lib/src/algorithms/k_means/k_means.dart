@@ -1,33 +1,31 @@
 // Copyright (c) 2014, <Alvaro Arcas Garcia>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
+
 library KMeans;
 
 import "dart:math";
-import "../../dataSet/instance.dart";
 import 'cluster.dart';
 
 
 class K_Means {
 
   int numCluster;
-  int numIterations;
-  List <Instance> instances;
   List <Cluster> clusters;
 
-  K_Means(this.numCluster, this.instances, this.numIterations) {
+  K_Means(this.numCluster, List<List<double>>points) {
     this.clusters = [];
     for (int i = 0; i < this.numCluster; i++) {
       Cluster tempCluster = new Cluster();
-      tempCluster.initialization(this.instances[0].attributes.length);
+      tempCluster.initialization(points[0].length);
       this.clusters.add(tempCluster);
     }
   }
 
   void cluster() {
-    for (int i = 0; i < this.numIterations; i++) {
+    do{
       this.association();
       this.recalculateCentroids();
-    }
+    }while(!_isReached());
   }
 
   void recalculateCentroids() {
@@ -45,7 +43,7 @@ class K_Means {
   }
 
   void association() {
-
+    List
     for (Cluster cluster in this.clusters) {
       cluster.instances = [];
     }
@@ -65,6 +63,10 @@ class K_Means {
       Sum = Sum + pow((pointA[i] - pointB[i]), 2.0);
     }
     return sqrt(Sum);
+  }
+
+  bool _isReached(){
+    return false;
   }
 }
 

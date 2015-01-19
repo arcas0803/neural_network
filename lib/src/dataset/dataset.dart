@@ -215,11 +215,16 @@ class DataSet {
   ///
 
   List<double> get minValues {
+
     List <double> minRow = [];
+    if(this.instances.isEmpty)
+      return [];
+
     for (int i = 0; i < this.numValues + this.numClassValues; i++) {
-      minRow.add(this.getColumn(i).reduce(min));
+        minRow.add(this.getColumn(i).reduce(min));
     }
     return minRow;
+
   }
 
   ///
@@ -228,11 +233,15 @@ class DataSet {
   ///
 
   List<double> get maxValues {
+
     List<double> maxRow = [];
+    if(this.instances.isEmpty)
+      return [];
     for (int i = 0; i < this.numValues+this.numClassValues; i++) {
       maxRow.add(this.getColumn(i).reduce(max));
     }
     return maxRow;
+
   }
 
   ///
@@ -241,7 +250,10 @@ class DataSet {
   ///
 
   List<double> get meanValues {
+
     List<double> meanRow = [];
+    if(this.instances.isEmpty)
+      return [];
     for (int i = 0; i < this.numValues + this.numClassValues; i++) {
       List <double> temp = this.getColumn(i);
       double mean = 0.0;
@@ -251,6 +263,7 @@ class DataSet {
       meanRow.add(double.parse((mean / temp.length).toStringAsFixed(2)));
     }
     return meanRow;
+
   }
 
   ///
@@ -356,6 +369,14 @@ class DataSet {
       temp.add(this.instances[index].elements[i]);
     }
     return temp;
+  }
+
+  ///
+  /// Remove all instances.
+  ///
+
+  void removeAllInstances(){
+    this.instances = [];
   }
 
   ///

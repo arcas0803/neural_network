@@ -13,9 +13,9 @@ class RandomizeFilter implements Filter {
 
   List<Instance> applyFilter(DataSet input) {
 
-    if (input.instances.length > 0) {
-      input.instances.shuffle();
-    }
+    if(input.instances.isEmpty)
+      throw("DataSet has no instances");
+    input.instances.shuffle();
     return input.instances;
 
   }
