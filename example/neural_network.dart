@@ -228,10 +228,17 @@ main() {
   simplePerceptron.learningRule.addStopCondition(new MinError(0.01, simplePerceptron.learningRule));
   simplePerceptron.learningRule.addStopCondition(new WeightVariation(0.05, simplePerceptron.learningRule));
 
-  ///
-  /// Multilayer Perceptron
-  ///
 
+  // Multilayer Perceptron
+  // The first parameter is a list of integer values. Each value indicates the number of neurons in one layer. The lenght
+  // of the list indicates the number of network layers.
+  // The second parameter sets the maximum number of iterations of the network during learning.
 
+  MultilayerPerceptron multilayerPerceptron = new MultilayerPerceptron([3,3,3,3,3,1], 100);
 
+  multilayerPerceptron.learningRule.learn(supervisedDataSetExample); //Supervised dataset needed.
+
+  // Get the error of all iterations.
+
+  List<double> errorIterationsMultilayer = (multilayerPerceptron.learningRule as BackPropagationLearningRule).errorIterations;
 }
