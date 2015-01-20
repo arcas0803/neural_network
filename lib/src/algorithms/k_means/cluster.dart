@@ -14,11 +14,4 @@ class Cluster {
     this.centroid = [];
     this.points = [];
   }
-
-  void initialization(int dimensions) {
-    for (int i = 0; i < dimensions; i++) {
-      Random rd = new Random();
-      this.centroid.add(rd.nextDouble());
-    }
-  }
 }

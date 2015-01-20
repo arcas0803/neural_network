@@ -11,49 +11,59 @@ class K_Means {
 
   int numCluster;
   List <Cluster> clusters;
+  List<List<double>> points;
+  int maxIterations = 50;
+  int currentIteration;
 
-  K_Means(this.numCluster, List<List<double>>points) {
+  K_Means(this.numCluster, this.points) {
     this.clusters = [];
-    for (int i = 0; i < this.numCluster; i++) {
-      Cluster tempCluster = new Cluster();
-      tempCluster.initialization(points[0].length);
-      this.clusters.add(tempCluster);
+    this.initialization();
+    this.currentIteration = 0;
+  }
+
+  void initialization() {
+    for(int i = 0; i < this.numCluster; i++){
+      Cluster cluster = new Cluster();
+      cluster.centroid = this.points[(new Random().nextDouble() * points.length).toInt()];
+      this.clusters.add(cluster);
     }
+
   }
 
   void cluster() {
     do{
-      this.association();
+      this.associatingPoints();
       this.recalculateCentroids();
-    }while(!_isReached());
+      this.currentIteration++;
+    }while(this.currentIteration < this.maxIterations);
   }
 
   void recalculateCentroids() {
     for (Cluster cluster in this.clusters) {
-      List <double> centroid = [];
-      for (int i = 0; i < cluster.centroid.length; i++) {
+      List <double> newCentroid = [];
+      for(int k = 0; k < cluster.points[0].length; k++){
         double mean = 0.0;
-        for (int j = 0; cluster.instances.length; j++) {
-          mean += cluster.instances[j].attributes[i];
+        for(int i = 0; i < cluster.points.length ; i++){
+          mean += cluster.points[i][k];
         }
-        centroid.add(mean / cluster.instances.length);
+        newCentroid.add(mean/cluster.points.length);
       }
-      cluster.centroid = centroid;
+      cluster.centroid = newCentroid;
     }
   }
 
-  void association() {
-    List
+  void associatingPoints() {
+
     for (Cluster cluster in this.clusters) {
-      cluster.instances = [];
+      cluster.points = [];
     }
 
-    for (Instance instance in this.instances) {
+    for (List<double> point in this.points) {
       List<double> distances = [];
       for (Cluster cluster in this.clusters) {
-        distances.add(this.distance(cluster.centroid, instance.attributes));
+        distances.add(this.distance(cluster.centroid, point));
       }
-      this.clusters[distances.indexOf(distances.reduce(min))].instances.add(instance);
+      this.clusters[distances.indexOf(distances.reduce(min))].points.add(point);
     }
   }
 
@@ -65,8 +75,13 @@ class K_Means {
     return sqrt(Sum);
   }
 
-  bool _isReached(){
-    return false;
+  List<List<double>> get centroids{
+    List<List<double>> centroids = [];
+    for(Cluster cluster in this.clusters){
+      centroids.add(cluster.centroid);
+    }
+    return centroids;
   }
+
 }
 

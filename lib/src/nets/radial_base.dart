@@ -3,15 +3,14 @@
 
 library RadialBase;
 
-import '../arquitecture/network.dart';
-import '../arquitecture/layer.dart';
-import '../arquitecture/neuron.dart';
+import '../arquitecture/arquitecture_export.dart';
 import '../functions/input/radial_function.dart';
 import '../functions/input/weight_combination_function.dart';
 import '../functions/activation/gaussian_function.dart';
 import '../functions/activation/lineal_function.dart';
+import '../learning_rule/radial_learning.dart';
 import '../functions/error/mean_square_error.dart';
-import '../functions/stop/max_iterations_function.dart';
+
 
 class RadialBase extends Network {
   RadialBase(int numInputNeurons, int numHiddenNeurons, int numOutputNeurons, int maxIterations):super() {
@@ -27,13 +26,23 @@ class RadialBase extends Network {
 
     Layer outputLayer = new Layer("OutputLayer");
     outputLayer.createNeurons(numOutputNeurons, inputFunction: new WeightCombination(), activationFunction: new Lineal());
+    for (Neuron neuron in outputLayer.neurons) {
+      Neuron umbral = new Neuron("Umbral");
+      umbral.input = 1.0;
+      umbral.output = 1.0;
+      neuron.addInputConnectionFromNeuron(umbral);
+    }
 
-    Network radial = new Network();
-    radial.addLayer(inputLayer);
-    radial.addLayer(hiddenLayer);
-    radial.addLayer(outputLayer);
-    radial.connectLayers();
 
+    this.addLayer(inputLayer);
+    this.addLayer(hiddenLayer);
+    this.addLayer(outputLayer);
+    this.connectLayers();
 
+    RadialLearning radialLearning = new RadialLearning(maxIterations);
+    radialLearning.network = this;
+    radialLearning.errorFunction = new MeanSquareError();
+    radialLearning.learningRate = 0.01;
+    this.learningRule = radialLearning;
   }
 }

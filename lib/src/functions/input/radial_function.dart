@@ -11,7 +11,7 @@ class Radial implements InputFunction {
 
   /// Amplitude serves for the hidden neuron is activated in a region of the input space trying not to overlap
   /// the area of activation of other neurons.
-  double amplitude = 1.0;
+  double deviation = 1.0;
 
   ///
   /// Uses the input function of the difference but with a modification ; using amplitude.
@@ -23,7 +23,7 @@ class Radial implements InputFunction {
     for (Connection temp in inputConnections) {
       output += pow(temp.inputNeuronDestination - temp.weightValue, 2);
     }
-    return sqrt(output) / amplitude;
+    return sqrt(output) / deviation;
 
   }
 
