@@ -251,17 +251,16 @@ main() {
   RadialBase radialNetwork = new RadialBase(8,5,1,500);
 
   // Its necessary to initialize the network
-
   List<List<double>> trainInstances = [];
   for(int i = 0; i <  supervisedDataSetExample.instances.length; i++){
     if(supervisedDataSetExample.instances[i].isForTrain!=null && supervisedDataSetExample.instances[i].isForTrain)
       trainInstances.add(supervisedDataSetExample.instanceValues(i));
   }
 
-  (radialNetwork.learningRule as RadialLearning).initialization(trainInstances);
+  //(radialNetwork.learningRule as RadialLearning).initialization(trainInstances);
 
   //Learn
 
-  radialNetwork.learningRule.learningRate = 0.0001;
-  radialNetwork.learningRule.learn(supervisedDataSetExample);
+  //radialNetwork.learningRule.learningRate = 0.0001;
+  //radialNetwork.learningRule.learn(supervisedDataSetExample);
 }

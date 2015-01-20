@@ -526,6 +526,7 @@ main() {
         if(dataSetTest.instances[i].isForTrain!=null && dataSetTest.instances[i].isForTrain)
           trainInstances.add(dataSetTest.instanceValues(i));
       }
+      print(trainInstances);
 
       (radialNetwork.learningRule as RadialLearning).initialization(trainInstances);
 

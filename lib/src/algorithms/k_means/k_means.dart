@@ -22,9 +22,11 @@ class K_Means {
   }
 
   void initialization() {
+    if(this.points.isEmpty)
+      throw("No points for cluster");
     for(int i = 0; i < this.numCluster; i++){
       Cluster cluster = new Cluster();
-      cluster.centroid = this.points[(new Random().nextDouble() * points.length).toInt()];
+      cluster.centroid = this.points[new Random().nextInt(points.length)];
       this.clusters.add(cluster);
     }
 

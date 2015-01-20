@@ -137,7 +137,7 @@ class DataSet {
   List <Instance> get trainSet {
     List <Instance> temp = [];
     for (Instance instance in this.instances) {
-      if (instance.isForTrain) {
+      if (instance.isForTrain != null && instance.isForTrain) {
         temp.add(instance);
       }
     }
@@ -151,7 +151,7 @@ class DataSet {
   List <Instance> get testSet {
     List <Instance> temp = [];
     for (Instance instance in this.instances) {
-      if(!instance.isForTrain){
+      if(instance.isForTrain != null && !instance.isForTrain){
         temp.add(instance);
       }
     }
