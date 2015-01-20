@@ -202,6 +202,31 @@ Multilayer Perceptron:
 
         List<double> errorIterationsMultilayer = (multilayerPerceptron.learningRule as BackPropagationLearningRule).errorIterations;
 
+Radial Base network:
+
+      // Radial base network
+      // The first parameter defines the number of neurons in the input layer .
+      // The second parameter defines the number of neurons in the hidden layer.
+      // The third parameter refers to the number of neurons in the output layer.
+      // The last parameter is the maximum number of iterations for learning.
+
+      RadialBase radialNetwork = new RadialBase(8,5,1,500);
+
+      // Its necessary to initialize the network
+
+      List<List<double>> trainInstances = [];
+      for(int i = 0; i <  supervisedDataSetExample.instances.length; i++){
+        if(supervisedDataSetExample.instances[i].isForTrain!=null && supervisedDataSetExample.instances[i].isForTrain)
+          trainInstances.add(supervisedDataSetExample.instanceValues(i));
+      }
+
+      (radialNetwork.learningRule as RadialLearning).initialization(trainInstances);
+
+      //Learn
+
+      radialNetwork.learningRule.learningRate = 0.0001;
+      radialNetwork.learningRule.learn(supervisedDataSetExample);
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].

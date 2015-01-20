@@ -468,8 +468,6 @@ main() {
       adaline.learningRule.learn(dataSetTest);
 
 
-      print((adaline.learningRule as BasicLearningRule).errorIterations);
-
     });
 
     test('[Perceptron]', () {
@@ -511,7 +509,6 @@ main() {
       multiLayerPerceptron.learningRule.learningRate = 0.3;
       multiLayerPerceptron.learningRule.learn(dataSetTest);
 
-      print((multiLayerPerceptron.learningRule as BackPropagationLearningRule).errorIterations);
 
 
     });
@@ -523,7 +520,6 @@ main() {
       dataSetTest.trainTestSet = 1000;
 
       RadialBase radialNetwork = new RadialBase(8,3,1,500);
-      print(radialNetwork.layers);
 
       List<List<double>> trainInstances = [];
       for(int i = 0; i < dataSetTest.instances.length; i++){
@@ -533,8 +529,8 @@ main() {
 
       (radialNetwork.learningRule as RadialLearning).initialization(trainInstances);
 
+      radialNetwork.learningRule.learningRate = 0.0001;
       radialNetwork.learningRule.learn(dataSetTest);
-      print((radialNetwork.learningRule as RadialLearning).errorIterations);
 
     });
   });
