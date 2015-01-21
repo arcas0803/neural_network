@@ -137,37 +137,46 @@ The application of filters to the data set is also possible :
       supervisedDataSetExample.instances = random.applyFilter(supervisedDataSetExample);
       unsupervisedDataSetExample.instances = random.applyFilter(unsupervisedDataSetExample);
 
-The library allows you to create custom networks neurons :
-
-
-
 There are also four already implemented network topologies :
 
 Adaline:
 
       // Adaline network.
-      // The first parameter determines the number of cells input from the network.
-      // The second parameter sets the maximum number of iterations of the network during learning.
+        // The first parameter determines the number of cells input from the network.
+        // The second parameter sets the maximum number of iterations of the network during learning.
 
-      Adaline adalineNetwork = new Adaline(3,100);
+        Adaline adalineNetwork = new Adaline(3,100);
 
-      // Learn Process
+        // Learn Process
 
-      // Set the learning rate.
+        // Set the learning rate.
 
-      adalineNetwork.learningRule.learningRate = 0.01;
+        adalineNetwork.learningRule.learningRate = 0.01;
 
-      // Learn
+        // Learn
 
-      adalineNetwork.learningRule.learn(supervisedDataSetExample); //The dataset must be supervised
+        adalineNetwork.learningRule.learn(supervisedDataSetExample); //The dataset must be supervised
 
-      // Get the error of all iterations.
+        // Test your network with the test instance of your dataSet.
 
-      List<double> errorIterationsAdaline = (adalineNetwork.learningRule as BasicLearningRule).errorIterations;
+        TestingRule testRuleAdaline = new TestingRule(new MeanSquareError(),adalineNetwork);
+        testRuleAdaline.test(supervisedDataSetExample);
+
+        List<List<double>>outputNetworkTestAdaline = testRuleAdaline.outputNetworkTest;
+        List<double> errorTestAdaline = testRuleAdaline.errorTests;
+
+        // Get the error of all iterations.
+
+        List<double> errorIterationsAdaline = (adalineNetwork.learningRule as BasicLearningRule).errorIterations;
+
+        // Get the outputs of the network in the learn process.
+
+        List<List<double>> outputNetworkTrainAdaline = (adalineNetwork.learningRule as BasicLearningRule).outputNetworkTrain;
+
 
 Simple Perceptron:
 
-        //Simple Perceptron network.
+      // Simple Perceptron network.
         // The first parameter determines the number of cells input from the network.
         // The second parameter sets the maximum number of iterations of the network during learning.
 
@@ -187,45 +196,71 @@ Simple Perceptron:
 
         List<double> errorIterationsPerceptron = (simplePerceptron.learningRule as BasicLearningRule).errorIterations;
 
+        // Get the outputs of the network in the learn process.
+
+        List<List<double>> outputNetworkTrainPerceptron = (simplePerceptron.learningRule as BasicLearningRule).outputNetworkTrain;
+
+        // Test your network with the test instance of your dataSet.
+
+        TestingRule testRuleSimplePerceptron = new TestingRule(new MeanSquareError(),simplePerceptron);
+        testRuleSimplePerceptron.test(supervisedDataSetExample);
+
+        List<List<double>>outputNetworkTestSimplePerceptron = testRuleSimplePerceptron.outputNetworkTest;
+        List<double> errorTestSimplePerceptron = testRuleSimplePerceptron.errorTests;
+
+
 Multilayer Perceptron:
 
         // Multilayer Perceptron
-        // The first parameter is a list of integer values. Each value indicates the number of neurons in one layer. The lenght
-        // of the list indicates the number of network layers.
-        // The second parameter sets the maximum number of iterations of the network during learning.
+          // The first parameter is a list of integer values. Each value indicates the number of neurons in one layer. The lenght
+          // of the list indicates the number of network layers.
+          // The second parameter sets the maximum number of iterations of the network during learning.
 
-        MultilayerPerceptron multilayerPerceptron = new MultilayerPerceptron([3,3,3,3,3,1], 100);
+          MultilayerPerceptron multilayerPerceptron = new MultilayerPerceptron([3,3,3,3,3,1], 100);
 
-        multilayerPerceptron.learningRule.learn(supervisedDataSetExample); //Supervised dataset needed.
+          multilayerPerceptron.learningRule.learn(supervisedDataSetExample); //Supervised dataset needed.
 
-        // Get the error of all iterations.
+          // Get the error of all iterations.
 
-        List<double> errorIterationsMultilayer = (multilayerPerceptron.learningRule as BackPropagationLearningRule).errorIterations;
+          List<double> errorIterationsMultilayer = (multilayerPerceptron.learningRule as BackPropagationLearningRule).errorIterations;
+
+          // Test your network with the test instance of your dataSet.
+
+          TestingRule testRuleMultilayerPerceptron = new TestingRule(new MeanSquareError(),multilayerPerceptron);
+          testRuleMultilayerPerceptron.test(supervisedDataSetExample);
+
+          List<List<double>>outputNetworkTestMultilayerPerceptron = testRuleMultilayerPerceptron.outputNetworkTest;
+          List<double> errorTestMultilayerPerceptron = testRuleMultilayerPerceptron.errorTests;
 
 Radial Base network:
 
-      // Radial base network
-      // The first parameter defines the number of neurons in the input layer .
-      // The second parameter defines the number of neurons in the hidden layer.
-      // The third parameter refers to the number of neurons in the output layer.
-      // The last parameter is the maximum number of iterations for learning.
+        // Radial base network
+        // The first parameter defines the number of neurons in the input layer .
+        // The second parameter defines the number of neurons in the hidden layer.
+        // The third parameter refers to the number of neurons in the output layer.
+        // The last parameter is the maximum number of iterations for learning.
 
-      RadialBase radialNetwork = new RadialBase(8,5,1,500);
+        RadialBase radialNetwork = new RadialBase(8,3,1,500);
 
-      // Its necessary to initialize the network
+        //An initialization of the network its needed.
 
-      List<List<double>> trainInstances = [];
-      for(int i = 0; i <  supervisedDataSetExample.instances.length; i++){
-        if(supervisedDataSetExample.instances[i].isForTrain!=null && supervisedDataSetExample.instances[i].isForTrain)
-          trainInstances.add(supervisedDataSetExample.instanceValues(i));
-      }
+        List<List<double>> trainInstances = [];
+        for(int i = 0; i < dataSetTest.instances.length; i++){
+          if(dataSetTest.instances[i].isForTrain!=null && dataSetTest.instances[i].isForTrain)
+            trainInstances.add(dataSetTest.instanceValues(i));
+        }
 
-      (radialNetwork.learningRule as RadialLearning).initialization(trainInstances);
+        (radialNetwork.learningRule as RadialLearning).initialization(trainInstances);
 
-      //Learn
+        //Learn
 
-      radialNetwork.learningRule.learningRate = 0.0001;
-      radialNetwork.learningRule.learn(supervisedDataSetExample);
+        radialNetwork.learningRule.learningRate = 0.0001;
+        radialNetwork.learningRule.learn(dataSetTest);
+
+        // Test
+
+        TestingRule testRule = new TestingRule(new MeanSquareError(),radialNetwork);
+        testRule.test(dataSetTest);
 
 ## Features and bugs
 

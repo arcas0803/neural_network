@@ -65,11 +65,11 @@ abstract class LearningRule {
 
   bool hasReachStopCondition() {
     for (StopCondition stopCondition in this._stopConditions) {
-      if (!stopCondition.isReached()) {
-        return false;
+      if (stopCondition.isReached()) {
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   void learn(DataSet dataSet);

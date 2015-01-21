@@ -14,6 +14,7 @@ abstract class SupervisedLearningRule extends LearningRule {
 
   ErrorFunction _errorFunction;
   List <double> errorIterations;
+  List<List<double>> outputNetworkTrain;
 
   ///
   /// [new SupervisedLearningRule] use to create a supervised learning rule.
@@ -25,6 +26,7 @@ abstract class SupervisedLearningRule extends LearningRule {
     MaxIteration stopCondition = new MaxIteration(maxIterations, this);
     this.addStopCondition(stopCondition);
     this.errorIterations = [];
+    this.outputNetworkTrain = [];
   }
 
   /// The error function indicates how to calculate the network error.
@@ -46,6 +48,8 @@ abstract class SupervisedLearningRule extends LearningRule {
   ///
 
   void learn(DataSet dataSet) {
+    if(!dataSet.isSupervised)
+      throw("For supervised learning, supervised dataset is needed");
     while (!hasReachStopCondition()) {
       this.learnIteration(dataSet);
     }
@@ -65,6 +69,7 @@ abstract class SupervisedLearningRule extends LearningRule {
     this.network.inputNetwork = values;
     this.network.calculateOutput();
     List <double> outputNetwork = this.network.outputNetwork;
+    this.outputNetworkTrain.add(outputNetwork);
     List <double> outputNetworkError = this.calculateOutputError(outputNetwork, classValues);
     this.errorFunction.addError(outputNetworkError);
     this.updateWeights(outputNetworkError);

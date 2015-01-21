@@ -7,12 +7,17 @@ import "../dataset/dataset_export.dart";
 
 abstract class NoSupervisedLearningRule extends LearningRule {
 
+  List<List<double>> outputNetworkTrain;
+
   NoSupervisedLearningRule(int maxIterations):super() {
     MaxIteration stopCondition = new MaxIteration(maxIterations, this);
     this.addStopCondition(stopCondition);
+    this.outputNetworkTrain = [];
   }
 
   void learn(DataSet dataSet) {
+    if(dataSet.isSupervised)
+      throw("For unsupervised learning, unsupervised dataset is needed");
     while (!hasReachStopCondition()) {
       this.learnIteration(dataSet);
     }
@@ -29,7 +34,8 @@ abstract class NoSupervisedLearningRule extends LearningRule {
 
   void learnPattern(List<double>values) {
     this.network.inputNetwork = values;
-    this.network.calculateOutput();
+    List <double> outputNetwork = this.network.calculateOutput();
+    this.outputNetworkTrain.add(outputNetwork);
     this.updateWeights();
 
   }
