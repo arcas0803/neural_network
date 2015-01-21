@@ -261,3 +261,4 @@ Radial Base network:
 
         TestingRule testRule = new TestingRule(new MeanSquareError(),radialNetwork);
         testRule.test(dataSetTest);
+        
